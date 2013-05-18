@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>database</type>
+		<description>Language labels for database tables/fields belonging to extension 'fluidbackend'</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="tx_fluidbackend_domain_model_configuration">Module configuration</label>
+			<label index="tx_fluidbackend_domain_model_configuration.name">System name (lowerCamelCase only)</label>
+			<label index="tx_fluidbackend_domain_model_configuration.label">Label (Any human-readable label)</label>
+			<label index="tx_fluidbackend_domain_model_configuration.configuration">Module settings</label>
+		</languageKey>
+	</data>
+</T3locallang>

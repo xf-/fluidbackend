@@ -1,0 +1,72 @@
+<f:layout name="Default" />
+<f:alias map="{lll: 'LLL:EXT:fluidbackend/Resources/Private/Language/locallang.xml:', dateFormat: 'Y-m-d H:i:s'}">
+	<f:be.container>
+		<f:form action="save" name="editform" objectName="settings" enctype="multipart/form-data" arguments="{configurationName: configurationName}">
+			<div class="typo3-fullDoc">
+				<div id="typo3-docheader">
+					<div id="typo3-docheader-row1">
+						<div class="buttonsleft">
+							<span class="t3-icon t3-icon-actions t3-icon-actions-document t3-icon-document-save">
+								<input type="image" name="_savedok" class="c-inputButton" src="clear.gif" title="{f:translate(key: '{lll}save')}">
+							</span>
+							<f:render section="ButtonsLeft" optional="TRUE" />
+						</div>
+						<div class="buttonsright">
+							<f:render section="ButtonsRight" optional="TRUE" />
+						</div>
+					</div>
+					<div id="typo3-docheader-row2">
+						<div class="docheader-row2-left">
+							<f:translate key="{lll}module" default="Module" />: <strong>{label}</strong> (id: <em>{id}</em>)
+						</div>
+						<div class="docheader-row2-right">
+							<f:translate key="{lll}header" arguments="{0: '{outlets -> f:count()}', 1: record.uid, 2: record.pid}" />
+						</div>
+					</div>
+				</div>
+				<div id="typo3-docbody">
+					<div id="typo3-inner-docbody">
+						<f:flashMessages renderMode="div" />
+						<table class="typo3-TCEforms">
+							<tbody>
+								<tr>
+									<td colspan="2" style="border-bottom: 1px solid #ADADAD;">
+										<f:render section="Main" />
+									</td>
+								</tr>
+								<tr class="typo3-TCEforms-recHeaderRow">
+									<td colspan="2">
+										<ul>
+											<f:for each="{outlets}" as="outlet" iteration="iteration">
+												<f:alias map="{target: '{f:if(condition: outlet.target, then: outlet.target,
+													else: \'{f:translate(key: \\\'{lll}undefined\\\')}\')}'}">
+													<li>
+														<span class="typo3-TCEforms-recHeader"><f:translate key="{lll}outlet"
+															arguments="{0: outlet.outlet, 1: outlet.name, 2: target}" /></span>
+														<span class="typo3-TCEforms-recHeader"><f:translate key="{lll}priority"
+															arguments="{0: iteration.cycle}" /></span>
+														<f:if condition="{outlet.modificationDate.timestamp}">
+															<f:then>
+																<span class="typo3-TCEforms-recUid"><f:translate key="{lll}modified"
+																	arguments="{0: '{outlet.modificationDate -> f:format.date(format: dateFormat)}'}" /></span>
+															</f:then>
+															<f:else>
+																<span class="typo3-TCEforms-recUid"><f:translate key="{lll}modified"
+																	arguments="{0: '{f:translate(key: \'{lll}undefined\')}'}" /></span>
+															</f:else>
+														</f:if>
+													</li>
+												</f:alias>
+											</f:for>
+										</ul>
+										<f:render section="Status" optional="TRUE" />
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</f:form>
+	</f:be.container>
+</f:alias>

@@ -1,0 +1,6 @@
+[GLOBAL]
+plugin.tx_fluidbackend.view {
+	templateRootPath = EXT:fluidbackend/Resources/Private/Templates/
+	partialRootPath = EXT:fluidbackend/Resources/Private/Partials/
+	layoutRootPath = EXT:fluidbackend/Resources/Private/Layouts/
+}

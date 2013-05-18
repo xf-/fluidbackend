@@ -1,0 +1,13 @@
+{namespace flux=Tx_Flux_ViewHelpers}
+<f:layout name="Default" />
+
+<f:section name="Configuration">
+	<flux:flexform id="error" label="Error" enabled="FALSE" />
+</f:section>
+
+<f:section name="Main">
+	<f:translate key="LLL:EXT:fluidbackend/Resources/Private/Language/locallang.xml:error" />
+	<p>
+		{error.message} ({error.code})
+	</p>
+</f:section>

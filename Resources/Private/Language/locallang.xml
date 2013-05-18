@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>database</type>
+		<description>Language labels for database tables/fields belonging to extension 'fluidbackend'</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="module">Module configuration</label>
+			<label index="header">Writing data to %s Outlet(s) using configuration record [%s] on page [%s]</label>
+			<label index="outlet">Outlet: %s "%s". Target: %s</label>
+			<label index="priority">[priority: %s]</label>
+			<label index="modified">[modified: %s]</label>
+			<label index="undefined">N/A</label>
+			<label index="save">Save data</label>
+			<label index="error">An error has occurred</label>
+		</languageKey>
+	</data>
+</T3locallang>
