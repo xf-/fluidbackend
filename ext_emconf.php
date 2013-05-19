@@ -13,7 +13,7 @@
 $EM_CONF[$_EXTKEY] = array(
 	'title' => 'Fluid Backend Engine',
 	'description' => 'Fluid Backend engine - create easy backend modules based on Flux forms',
-	'category' => 'backend',
+	'category' => 'be',
 	'author' => 'Claus Due',
 	'author_email' => 'claus@wildside.dk',
 	'author_company' => 'Wildside A/S',
