@@ -131,7 +131,7 @@ class Tx_Fluidbackend_Outlet_TypoScriptOutlet extends Tx_Fluidbackend_Outlet_Abs
 		$storagePid = $this->getStoragePid();
 		$name = $this->getName();
 		$label = $this->getLabel();
-		$clause = "pid = '" . $storagePid . "' AND title = '" . $name . ": " . $label . "'";
+		$clause = "pid = '" . $storagePid . "' AND title = '" . $name . ': ' . $label . "'";
 		$record = $this->getOrCreateRecord($clause);
 		return DateTime::createFromFormat('U', $record['tstamp']);
 	}
@@ -144,7 +144,7 @@ class Tx_Fluidbackend_Outlet_TypoScriptOutlet extends Tx_Fluidbackend_Outlet_Abs
 		$storagePid = $this->getStoragePid();
 		$name = $this->getName();
 		$label = $this->getLabel();
-		$clause = "pid = '" . $storagePid . "' AND title = '" . $name . ": " . $label . "'";
+		$clause = "pid = '" . $storagePid . "' AND title = '" . $name . ': ' . $label . "'";
 		$record = $this->getOrCreateRecord($clause);
 		$typoScript = '';
 		$lines = 0;

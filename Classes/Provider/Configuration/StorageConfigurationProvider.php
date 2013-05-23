@@ -81,7 +81,7 @@ class Tx_Fluidbackend_Provider_Configuration_StorageConfigurationProvider
 	 * @param array $row
 	 * @return NULL|string
 	 */
-	public function getExtensionKey(array $row)	{
+	public function getExtensionKey(array $row) {
 		if (TRUE === isset($row['name'])) {
 			list ($extensionName, , ) = explode('-', $row['name']);
 			$extensionKey = t3lib_div::camelCaseToLowerCaseUnderscored($extensionName);
