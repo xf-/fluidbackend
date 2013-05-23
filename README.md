@@ -1,9 +1,9 @@
-TYPO3 extension Fluidbackend: Flux Backend Modules
-==================================================
+Fluidbackend: Flux Backend Modules
+==================================
 
-## What is it?
+> **Fluid Backend** is an API for using Flux forms as backend modules which can save data to a multitude of targets and target types.
 
-**Fluid Backend** is an API for using Flux forms as backend modules which can save data to a multitude of targets and target types.
+[![Build Status](https://travis-ci.org/FluidTYPO3/fluidbackend.png?branch=master)](https://travis-ci.org/FluidTYPO3/fluidbackend)
 
 ## What does it do?
 
