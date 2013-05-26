@@ -229,7 +229,7 @@ jQuery.ajax({url: 'uploads/tx_myext/data.json', complete: function() {
 #### Using Flux to read from the storage database
 
 ```
-{flux:flexform.values(table: 'tx_fluidbackend_domain_model_configuration',
+{flux:flexform.data(table: 'tx_fluidbackend_domain_model_configuration',
 	field: 'configuration', uid: uidOfSavedRecord) -> v:var.set(name: 'myData')}
 ```
 
