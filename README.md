@@ -260,6 +260,8 @@ unless you take measures to protect the file, in which case PHP would probably m
 
 * Labels for the menu items must be placed in EXT:extkey/Resources/Private/Language/locallang_module_BASENAMEOFTEMPLATE.xml and
   the two main labels must be named `mlang_tabs_tab` (main title) and `mlang_labels_tablabel` (secondary title)
+* If you use a custom module group (group in menu) you'll need to add the LLL file (containing same labels as above):
+  EXT:extkey/Resources/Private/Language/locallang_module_GROUPNAME.xml
 * If you don't configure an Outlet for the data then nothing will happen when saving the form (except for updating config storage)
 * If you require a custom controller to be called, use the `ControllerOutlet` and set the parameters identifying your controller.
 

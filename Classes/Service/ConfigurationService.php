@@ -117,7 +117,7 @@ class Tx_Fluidbackend_Service_ConfigurationService extends Tx_Flux_Service_FluxS
 				}
 			}
 			$GLOBALS['TBE_MODULES'] = $temp_TBE_MODULES;
-			$moduleConfiguration['labels'] = 'LLL:EXT:' . $extensionKey . '/Resources/Private/Language/locallang_module.xml';
+			$moduleConfiguration['labels'] = 'LLL:EXT:' . $extensionKey . '/Resources/Private/Language/locallang_module_' . $module . '.xml';
 			Tx_Extbase_Utility_Extension::registerModule($extensionKey, $module, '', $position, array('Backend' => 'render,save'), $moduleConfiguration);
 		}
 		Tx_Extbase_Utility_Extension::registerModule(
