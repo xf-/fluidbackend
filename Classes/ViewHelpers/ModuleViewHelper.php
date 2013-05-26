@@ -27,6 +27,8 @@
  * ### Module configuration VieWHelper
  *
  * Sets various aspects of how this module should be integrated.
+ * Use inside flux:flexform to configure the module contained
+ * within the Flux form.
  *
  * @package Fluidbackend
  * @subpackage ViewHelpers

@@ -98,6 +98,9 @@ It's quite easy to grasp the infrastructure of EXT:fluidbackend:
 
 <f:section name="Configuration">
 	<flux:flexform id="render" label="Backend test" icon="EXT:fluidbackend/ext_icon.gif">
+		<!-- the be:module ViewHelper configures this module's position, parent and
+			 wether to use the page tree component (the "navigation" attribute) -->
+		<be:module group="mygroup" position="after:web" navigation="FALSE" />
 		<be:outlet.json name="json" label="JSON output" path="uploads/testjson.json" />
 	</flux:flexform>
 </f:section>
