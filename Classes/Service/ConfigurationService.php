@@ -41,18 +41,7 @@ class Tx_Fluidbackend_Service_ConfigurationService extends Tx_Flux_Service_FluxS
 	 */
 	public function getBackendModuleTemplatePaths($extensionName = NULL) {
 		$typoScript = $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
-		if (TRUE === isset($typoScript['plugin.']['tx_fluidbackend.']['view.'])) {
-			$ownPaths = $typoScript['plugin.']['tx_fluidbackend.']['view.'];
-		} else {
-			$ownPaths = array(
-				'templateRootPath' => 'EXT:fluidbackend/Resources/Private/Templates/',
-				'layoutRootPath' => 'EXT:fluidbackend/Resources/Private/Layouts/',
-				'partialRootPath' => 'EXT:fluidbackend/Resources/Private/Partials/',
-			);
-		}
-		$paths = array(
-			'fluidbackend' => $ownPaths
-		);
+		$paths = array();
 		$extensionKeys = Tx_Flux_Core::getRegisteredProviderExtensionKeys('Backend');
 		foreach ($extensionKeys as $extensionKey) {
 			$pluginSignature = str_replace('_', '', $extensionKey);
@@ -66,12 +55,23 @@ class Tx_Fluidbackend_Service_ConfigurationService extends Tx_Flux_Service_FluxS
 
 	/**
 	 * @param string $extensionKey
-	 * @param string $module
 	 * @param array $fluxConfiguration
 	 * @return void
 	 * @throws Exception
 	 */
-	public function registerModuleBasedOnFluxForm($extensionKey, $module, array $fluxConfiguration) {
+	public function registerModuleBasedOnFluxForm($extensionKey, array $fluxConfiguration) {
+		$module = 'web';
+		if (TRUE === isset($fluxConfiguration['moduleGroup'])) {
+			$module = $fluxConfiguration['moduleGroup'];
+		}
+		$position = 'before:help';
+		if (TRUE === isset($fluxConfiguration['modulePosition'])) {
+			$position = $fluxConfiguration['modulePosition'];
+		}
+		$navigationComponent = '';
+		if (TRUE === isset($fluxConfiguration['modulePageTree']) && TRUE === (boolean) $fluxConfiguration['modulePageTree']) {
+			$navigationComponent = 'typo3-pagetree';
+		}
 		$extensionKey = t3lib_div::camelCaseToLowerCaseUnderscored($extensionKey);
 		$extensionKey = strtolower($extensionKey);
 		$icon = 'EXT:' . $extensionKey . '/ext_icon.gif';
@@ -82,19 +82,53 @@ class Tx_Fluidbackend_Service_ConfigurationService extends Tx_Flux_Service_FluxS
 			throw new Exception('Attempt to register a Backend controller without an associated BackendController. Extension key: ' . $extensionKey, 1368826271);
 		}
 		$signature = str_replace('_', '', $extensionKey);
+		$moduleConfiguration = array(
+			'access' => 'user,group',
+			'icon'   => $icon,
+			'labels' => 'LLL:EXT:' . $extensionKey . '/Resources/Private/Language/locallang_module_' . $fluxConfiguration['id'] . '.xml'
+		);
+		if (FALSE === empty($navigationComponent)) {
+			$moduleConfiguration['navigationComponentId'] = $navigationComponent;
+		}
+		$moduleSignature = 'tx_' . $signature . '_' . $fluxConfiguration['id'];
+		if (FALSE === isset($GLOBALS['TBE_MODULES'][$module])) {
+			if (FALSE === strpos($position, ':')) {
+				if ('top' === $position) {
+					$temp_TBE_MODULES = array($module => '');
+					$temp_TBE_MODULES = t3lib_div::array_merge_recursive_overrule($temp_TBE_MODULES, $GLOBALS['TBE_MODULES']);
+				} else {
+					$temp_TBE_MODULES = $GLOBALS['TBE_MODULES'];
+					$temp_TBE_MODULES[$module] = '';
+				}
+			} else {
+				list ($command, $relativeKey) = explode(':', $position);
+				foreach ($GLOBALS['TBE_MODULES'] as $key => $val) {
+					if ($key === $relativeKey) {
+						if ('before' === $command) {
+							$temp_TBE_MODULES[$module] = '';
+							$temp_TBE_MODULES[$key] = $val;
+						} else {
+							$temp_TBE_MODULES[$key] = $val;
+							$temp_TBE_MODULES[$module] = '';
+						}
+					} else {
+						$temp_TBE_MODULES[$key] = $val;
+					}
+				}
+			}
+			$GLOBALS['TBE_MODULES'] = $temp_TBE_MODULES;
+			$moduleConfiguration['labels'] = 'LLL:EXT:' . $extensionKey . '/Resources/Private/Language/locallang_module.xml';
+			Tx_Extbase_Utility_Extension::registerModule($extensionKey, $module, '', $position, array('Backend' => 'render,save'), $moduleConfiguration);
+		}
 		Tx_Extbase_Utility_Extension::registerModule(
 			$extensionKey,
 			$module,
-			'tx_' . $signature . '_' . $fluxConfiguration['id'],
-			'Backend module',
+			$moduleSignature,
+			$position,
 			array(
 				'Backend' => 'render,save',
 			),
-			array(
-				'access' => 'user,group',
-				'icon'   => $icon,
-				'labels' => 'LLL:EXT:' . $extensionKey . '/Resources/Private/Language/locallang_module_' . $fluxConfiguration['id'] . '.xml',
-			)
+			$moduleConfiguration
 		);
 	}
 
@@ -114,7 +148,7 @@ class Tx_Fluidbackend_Service_ConfigurationService extends Tx_Flux_Service_FluxS
 				if (FALSE === (boolean) $storedConfiguration['enabled']) {
 					continue;
 				}
-				$this->registerModuleBasedOnFluxForm($extensionKey, 'web', $storedConfiguration);
+				$this->registerModuleBasedOnFluxForm($extensionKey, $storedConfiguration);
 			}
 		}
 	}
