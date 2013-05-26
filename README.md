@@ -162,6 +162,10 @@ where "foobar" is the action to which the template corresponds. One file must be
 
 Naturally this LLL file uses the language of the backend user - or the default. Exactly like TYPO3 always does.
 
+> Note: If you want your Fluid Backend module to be placed in a custom group (like the Web, File, Admin etc. groups) then simply
+> use the `<be:module group="mygroup" />` ViewHelper and place an LLL file just like the one above, except in this location:
+> EXT:myext/Resources/Private/Language/locallang_module_GROUPNAME.xml (in thise example it would be locallang_module_mygroup.xml).
+
 ### Required controller class
 
 EXT:fluidbackend will not work without a "BackendController" being present in the extension which provides the module(s). Such a
