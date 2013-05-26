@@ -11,7 +11,7 @@ Fluidbackend: Flux Backend Modules
 > target types (for example, JSON files or TypoScript records) as a data structure which reflects the field names.
 >
 > EXT:fluidbackend works much like EXT:fluidcontent and EXT:fluidpages by registering a set of templates which are to be used as
-> individual backend modules - EXT:fluidbackend then renders the Flux form defined in each template and presents it as a backend
+> individual backend modules - EXT:fluidbackend then renders the Flux form defined in each template and presents in as a backend
 > module as the main interface.
 >
 > You can configure the module's position, icon etc. through the Fluid template - and you can create a custom menu group for your
