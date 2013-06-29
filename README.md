@@ -5,6 +5,14 @@ Fluidbackend: Flux Backend Modules
 
 [![Build Status](https://travis-ci.org/FluidTYPO3/fluidbackend.png?branch=master)](https://travis-ci.org/FluidTYPO3/fluidbackend)
 
+## Code Quality
+
+![Abstraction Instability Chart](Documentation/ComplexityChart.png)
+![Inheritance and dependency risk](Documentation/PyramidChart.png)
+
+_Understanding the [Abstraction Instability Chart](http://pdepend.org/documentation/handbook/reports/abstraction-instability-chart.html)
+and [Pyramid Chart](http://pdepend.org/documentation/handbook/reports/overview-pyramid.html)._
+
 ## What does it do?
 
 > EXT:fluidbackend saves data entered in a form created using Flux ViewHelpers - and saves it to any number of highly configurable
