@@ -78,7 +78,7 @@ class Tx_Fluidbackend_Service_ConfigurationService extends Tx_Flux_Service_FluxS
 		if ($fluxConfiguration['icon']) {
 			$icon = $fluxConfiguration['icon'];
 		}
-		if (FALSE === $this->detectControllerClassPresenceFromExtensionKeyAndControllerType($extensionKey, 'Backend')) {
+		if (NULL === Tx_Flux_Utility_Resolve::resolveFluxControllerClassNameByExtensionKeyAndAction($extensionKey, 'render', 'Backend')) {
 			throw new Exception('Attempt to register a Backend controller without an associated BackendController. Extension key: ' . $extensionKey, 1368826271);
 		}
 		$signature = str_replace('_', '', $extensionKey);
