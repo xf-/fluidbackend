@@ -33,7 +33,7 @@
  * @package Fluidbackend
  * @subpackage ViewHelpers\Outlet
  */
-abstract class Tx_Fluidbackend_ViewHelpers_Outlet_AbstractOutletViewHelper extends Tx_Flux_Core_ViewHelper_AbstractFlexformViewHelper {
+abstract class Tx_Fluidbackend_ViewHelpers_Outlet_AbstractOutletViewHelper extends Tx_Flux_ViewHelpers_AbstractFlexformViewHelper {
 
 	/**
 	 * @var string
