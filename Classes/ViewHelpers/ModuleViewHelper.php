@@ -33,7 +33,7 @@
  * @package Fluidbackend
  * @subpackage ViewHelpers
  */
-class Tx_Fluidbackend_ViewHelpers_ModuleViewHelper extends Tx_Flux_Core_ViewHelper_AbstractFlexformViewHelper {
+class Tx_Fluidbackend_ViewHelpers_ModuleViewHelper extends Tx_Flux_ViewHelpers_AbstractFlexformViewHelper {
 
 	/**
 	 * @return void
