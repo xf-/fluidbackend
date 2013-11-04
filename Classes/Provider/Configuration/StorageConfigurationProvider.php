@@ -31,7 +31,7 @@
  * @subpackage Provider\Configuration
  */
 class Tx_Fluidbackend_Provider_Configuration_StorageConfigurationProvider
-	extends Tx_Flux_Provider_AbstractConfigurationProvider
+	extends Tx_Flux_Provider_AbstractProvider
 	implements Tx_Flux_Provider_ConfigurationProviderInterface {
 
 	/**
