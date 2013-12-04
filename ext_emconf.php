@@ -32,9 +32,9 @@ $EM_CONF[$_EXTKEY] = array(
 	'version' => '0.9.0',
 	'constraints' => array(
 		'depends' => array(
-			'typo3' => '4.5-0.0.0',
+			'typo3' => '6.0.0-6.1.99',
 			'cms' => '',
-			'flux' => '5.0.0',
+			'flux' => '6.0.0',
 		),
 		'conflicts' => array(
 		),
