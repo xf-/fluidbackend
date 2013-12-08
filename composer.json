@@ -1,9 +1,9 @@
 {
-    "name": "ft3/fluidbackend",
+    "name": "fluidtypo3/fluidbackend",
     "description": "The fluidbackend package from FluidTYPO3",
     "require": {
         "composer/installers": "*",
-        "ft3/flux": "*"
+        "fluidtypo3/flux": "*"
     },
     "type": "typo3-cms-extension"
 }
