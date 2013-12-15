@@ -1,4 +1,5 @@
 <?php
+namespace FluidTYPO3\Fluidbackend\Controller;
 /***************************************************************
  *  Copyright notice
  *
@@ -33,6 +34,6 @@
  * @subpackage Controller
  * @route off
  */
-class Tx_Fluidbackend_Controller_BackendController extends Tx_Fluidbackend_Controller_AbstractBackendController {
+class BackendController extends AbstractBackendController {
 
 }
