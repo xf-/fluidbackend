@@ -1,4 +1,5 @@
 <?php
+namespace FluidTYPO3\Fluidbackend\Outlet;
 /***************************************************************
  *  Copyright notice
  *
@@ -31,7 +32,7 @@
  * @package Fluidbackend
  * @subpackage Outlet
  */
-interface Tx_Fluidbackend_Outlet_OutletInterface {
+interface OutletInterface {
 
 	/**
 	 * @param boolean $enabled
@@ -88,7 +89,7 @@ interface Tx_Fluidbackend_Outlet_OutletInterface {
 	/**
 	 * @param string $outlet
 	 * @return void
-	 * @throws Exception
+	 * @throws \Exception
 	 * @abstract
 	 */
 	public function setOutlet($outlet);
@@ -100,14 +101,14 @@ interface Tx_Fluidbackend_Outlet_OutletInterface {
 	public function getOutlet();
 
 	/**
-	 * @param DateTime $modificationDate
+	 * @param \DateTime $modificationDate
 	 * @return void
 	 * @abstract
 	 */
 	public function setModificationDate($modificationDate);
 
 	/**
-	 * @return DateTime
+	 * @return \DateTime
 	 * @abstract
 	 */
 	public function getModificationDate();

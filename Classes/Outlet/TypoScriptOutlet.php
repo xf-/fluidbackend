@@ -1,4 +1,5 @@
 <?php
+namespace FluidTYPO3\Fluidbackend\Outlet;
 /***************************************************************
  *  Copyright notice
  *
@@ -38,7 +39,7 @@
  * @package Fluidbackend
  * @subpackage Outlet
  */
-class Tx_Fluidbackend_Outlet_TypoScriptOutlet extends Tx_Fluidbackend_Outlet_AbstractOutlet implements Tx_Fluidbackend_Outlet_OutletInterface {
+class TypoScriptOutlet extends AbstractOutlet implements OutletInterface {
 
 	/**
 	 * Default changed to FALSE which allows this Outlet
@@ -125,7 +126,7 @@ class Tx_Fluidbackend_Outlet_TypoScriptOutlet extends Tx_Fluidbackend_Outlet_Abs
 	}
 
 	/**
-	 * @return DateTime
+	 * @return \DateTime
 	 */
 	public function getModificationDate() {
 		$storagePid = $this->getStoragePid();
@@ -133,7 +134,7 @@ class Tx_Fluidbackend_Outlet_TypoScriptOutlet extends Tx_Fluidbackend_Outlet_Abs
 		$label = $this->getLabel();
 		$clause = "pid = '" . $storagePid . "' AND title = '" . $name . ': ' . $label . "'";
 		$record = $this->getOrCreateRecord($clause);
-		return DateTime::createFromFormat('U', $record['tstamp']);
+		return \DateTime::createFromFormat('U', $record['tstamp']);
 	}
 
 	/**
