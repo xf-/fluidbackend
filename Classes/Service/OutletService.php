@@ -1,4 +1,5 @@
 <?php
+namespace FluidTYPO3\Fluidbackend\Service;
 /***************************************************************
  *  Copyright notice
  *
@@ -22,6 +23,8 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use TYPO3\CMS\Core\SingletonInterface;
+use FluidTYPO3\Fluidbackend\Outlet\OutletInterface;
 
 /**
  * ### Outlet Execution Service
@@ -33,7 +36,7 @@
  * @package Fluidbackend
  * @subpackage Service
  */
-class Tx_Fluidbackend_Service_OutletService implements t3lib_Singleton {
+class OutletService implements SingletonInterface {
 
 	/**
 	 * @param mixed $post
@@ -54,13 +57,13 @@ class Tx_Fluidbackend_Service_OutletService implements t3lib_Singleton {
 	}
 
 	/**
-	 * @param array|Tx_Fluidbackend_Outlet_OutletInterface $outletOrOutlets
+	 * @param OutletInterface[]|OutletInterface $outletOrOutlets
 	 * @param array $data
 	 * @return void
-	 * @throws Exception
+	 * @throws \Exception
 	 */
 	public function produce($outletOrOutlets, $data) {
-		if (TRUE === $outletOrOutlets instanceof Tx_Fluidbackend_Outlet_OutletInterface) {
+		if (TRUE === $outletOrOutlets instanceof OutletInterface) {
 			$outletOrOutlets->produce($data);
 		} else {
 			foreach ($outletOrOutlets as $outlet) {
