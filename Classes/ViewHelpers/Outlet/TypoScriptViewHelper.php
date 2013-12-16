@@ -1,4 +1,5 @@
 <?php
+namespace FluidTYPO3\Fluidbackend\ViewHelpers\Outlet;
 /***************************************************************
  *  Copyright notice
  *
@@ -22,6 +23,9 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  *****************************************************************/
+use FluidTYPO3\Fluidbackend\Outlet\OutletInterface;
+use FluidTYPO3\Fluidbackend\Outlet\TypoScriptOutlet;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * ### Outlet Definition: TypoScript Settings Array Storage
@@ -34,7 +38,7 @@
  * @package Fluidbackend
  * @subpackage ViewHelpers\Outlet
  */
-class Tx_Fluidbackend_ViewHelpers_Outlet_TypoScriptViewHelper extends Tx_Fluidbackend_ViewHelpers_Outlet_AbstractOutletViewHelper {
+class TypoScriptViewHelper extends AbstractOutletViewHelper {
 
 	/**
 	 * @var string
@@ -52,13 +56,13 @@ class Tx_Fluidbackend_ViewHelpers_Outlet_TypoScriptViewHelper extends Tx_Fluidba
 	}
 
 	/**
-	 * @return Tx_Fluidbackend_Outlet_OutletInterface
+	 * @return OutletInterface
 	 */
 	protected function createOutletFromArguments() {
-		/** @var $outlet Tx_Fluidbackend_Outlet_TypoScriptOutlet */
+		/** @var $outlet TypoScriptOutlet */
 		$outlet = parent::createOutletFromArguments();
 		if (0 > $this->arguments['storagePid']) {
-			$storagePid = t3lib_div::_GET('id');
+			$storagePid = GeneralUtility::_GET('id');
 		} else {
 			$storagePid = $this->arguments['storagePid'];
 		}

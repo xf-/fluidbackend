@@ -1,4 +1,5 @@
 <?php
+namespace FluidTYPO3\Fluidbackend\ViewHelpers\Outlet;
 /***************************************************************
  *  Copyright notice
  *
@@ -22,6 +23,9 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  *****************************************************************/
+use FluidTYPO3\Flux\ViewHelpers\AbstractFormViewHelper;
+use FluidTYPO3\Fluidbackend\Outlet\OutletInterface;
+use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 
 /**
  * ## Outlet Definition ViewHelper
@@ -33,18 +37,18 @@
  * @package Fluidbackend
  * @subpackage ViewHelpers\Outlet
  */
-abstract class Tx_Fluidbackend_ViewHelpers_Outlet_AbstractOutletViewHelper extends Tx_Flux_ViewHelpers_AbstractFlexformViewHelper {
+abstract class AbstractOutletViewHelper extends AbstractFormViewHelper {
 
 	/**
-	 * @var Tx_Extbase_Object_ObjectManagerInterface
+	 * @var ObjectManagerInterface
 	 */
 	protected $objectManager;
 
 	/**
-	 * @param Tx_Extbase_Object_ObjectManagerInterface $objectManager
+	 * @param ObjectManagerInterface $objectManager
 	 * @return void
 	 */
-	public function injectObjectManager(Tx_Extbase_Object_ObjectManagerInterface $objectManager) {
+	public function injectObjectManager(ObjectManagerInterface $objectManager) {
 		$this->objectManager = $objectManager;
 	}
 
@@ -71,10 +75,10 @@ abstract class Tx_Fluidbackend_ViewHelpers_Outlet_AbstractOutletViewHelper exten
 	}
 
 	/**
-	 * @param Tx_Fluidbackend_Outlet_OutletInterface $outlet
+	 * @param OutletInterface $outlet
 	 * @return void
 	 */
-	protected function registerOutlet(Tx_Fluidbackend_Outlet_OutletInterface $outlet) {
+	protected function registerOutlet(OutletInterface $outlet) {
 		$storage = $this->getStorage();
 		if (FALSE === isset($storage['outlets'])) {
 			$storage['outlets'] = array();
@@ -84,15 +88,15 @@ abstract class Tx_Fluidbackend_ViewHelpers_Outlet_AbstractOutletViewHelper exten
 	}
 
 	/**
-	 * @return Tx_Fluidbackend_Outlet_OutletInterface
+	 * @return OutletInterface
 	 */
 	protected function createOutletFromArguments() {
 		if (TRUE === class_exists($this->outletClassName)) {
 			$className = $this->outletClassName;
 		} else {
-			$className = 'Tx_Fluidbackend_Outlet_' . $this->outletClassName . 'Outlet';
+			$className = 'FluidTYPO3\Fluidbackend\Outlet\\' . $this->outletClassName . 'Outlet';
 		}
-		/** @var $outlet Tx_Fluidbackend_Outlet_OutletInterface */
+		/** @var $outlet OutletInterface */
 		$outlet = $this->objectManager->get($className);
 		$outlet->setName($this->arguments['name']);
 		$outlet->setEnabled((boolean) $this->arguments['enabled']);

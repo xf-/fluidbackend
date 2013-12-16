@@ -1,4 +1,5 @@
 <?php
+namespace FluidTYPO3\Fluidbackend\ViewHelpers;
 /***************************************************************
  *  Copyright notice
  *
@@ -22,6 +23,8 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  *****************************************************************/
+use TYPO3\CMS\Fluid\ViewHelpers\FormViewHelper as FluidFormViewHelper;
+use FluidTYPO3\Flux\Service\FluxService;
 
 /**
  * ## Main form rendering ViewHelper
@@ -32,18 +35,18 @@
  * @package Fluidbackend
  * @subpackage ViewHelpers
  */
-class Tx_Fluidbackend_ViewHelpers_FormViewHelper extends Tx_Fluid_ViewHelpers_FormViewHelper {
+class FormViewHelper extends FluidFormViewHelper {
 
 	/**
-	 * @var Tx_Flux_Service_FluxService
+	 * @var FluxService
 	 */
 	protected $configurationService;
 
 	/**
-	 * @param Tx_Flux_Service_FluxService $configurationService
+	 * @param FluxService $configurationService
 	 * @return void
 	 */
-	public function injectConfigurationService(Tx_Flux_Service_FluxService $configurationService) {
+	public function injectConfigurationService(FluxService $configurationService) {
 		$this->configurationService = $configurationService;
 	}
 
@@ -55,7 +58,7 @@ class Tx_Fluidbackend_ViewHelpers_FormViewHelper extends Tx_Fluid_ViewHelpers_Fo
 		$row = $data['record'];
 		$field = $data['fluxRecordField'];
 		$table = $data['fluxTableName'];
-		/** @var $formHandler t3lib_TCEforms */
+		/** @var $formHandler \TYPO3\CMS\Backend\Form\FormEngine */
 		$formHandler = $data['formHandler'];
 		$formHandler->prependFormFieldNames = $this->getFieldNamePrefix() . '[settings]';
 		$content = '';

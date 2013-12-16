@@ -1,4 +1,5 @@
 <?php
+namespace FluidTYPO3\Fluidbackend\ViewHelpers;
 /***************************************************************
  *  Copyright notice
  *
@@ -22,6 +23,7 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  *****************************************************************/
+use FluidTYPO3\Flux\ViewHelpers\AbstractformViewHelper;
 
 /**
  * ### Module configuration VieWHelper
@@ -33,7 +35,7 @@
  * @package Fluidbackend
  * @subpackage ViewHelpers
  */
-class Tx_Fluidbackend_ViewHelpers_ModuleViewHelper extends Tx_Flux_ViewHelpers_AbstractFlexformViewHelper {
+class ModuleViewHelper extends AbstractformViewHelper {
 
 	/**
 	 * @return void
