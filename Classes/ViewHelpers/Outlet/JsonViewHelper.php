@@ -1,4 +1,5 @@
 <?php
+namespace FluidTYPO3\Fluidbackend\ViewHelpers\Outlet;
 /***************************************************************
  *  Copyright notice
  *
@@ -22,6 +23,9 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  *****************************************************************/
+use FluidTYPO3\Fluidbackend\Outlet\OutletInterface;
+use FluidTYPO3\Fluidbackend\Outlet\JsonOutlet;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * ## Outlet: JSON Outlet
@@ -31,7 +35,7 @@
  * @package Fluidbackend
  * @subpackage ViewHelpers\Outlet
  */
-class Tx_Fluidbackend_ViewHelpers_Outlet_JsonViewHelper extends Tx_Fluidbackend_ViewHelpers_Outlet_AbstractOutletViewHelper {
+class JsonViewHelper extends AbstractOutletViewHelper {
 
 	/**
 	 * @var string
@@ -48,11 +52,11 @@ class Tx_Fluidbackend_ViewHelpers_Outlet_JsonViewHelper extends Tx_Fluidbackend_
 	}
 
 	/**
-	 * @return Tx_Fluidbackend_Outlet_OutletInterface
+	 * @return OutletInterface
 	 */
 	protected function createOutletFromArguments() {
-		$filePathAndFilename = t3lib_div::getFileAbsFileName($this->arguments['path']);
-		/** @var $outlet Tx_Fluidbackend_Outlet_JsonOutlet */
+		$filePathAndFilename = GeneralUtility::getFileAbsFileName($this->arguments['path']);
+		/** @var $outlet JsonOutlet */
 		$outlet = parent::createOutletFromArguments();
 		$outlet->setFilePathAndFilename($filePathAndFilename);
 		$outlet->setPreserveHtml((boolean) $this->arguments['preserveHtml']);

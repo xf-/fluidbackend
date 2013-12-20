@@ -1,4 +1,5 @@
 <?php
+namespace FluidTYPO3\Fluidbackend\Outlet;
 /***************************************************************
  *  Copyright notice
  *
@@ -22,6 +23,8 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  *****************************************************************/
+use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Core\Messaging\FlashMessageQueue;
 
 /**
  * ### Outlet Definition
@@ -33,7 +36,7 @@
  * @package Fluidbackend
  * @subpackage Outlet
  */
-abstract class Tx_Fluidbackend_Outlet_AbstractOutlet {
+abstract class AbstractOutlet implements OutletInterface {
 
 	/**
 	 * @var boolean
@@ -65,7 +68,7 @@ abstract class Tx_Fluidbackend_Outlet_AbstractOutlet {
 	protected $target;
 
 	/**
-	 * @var DateTime
+	 * @var \DateTime
 	 */
 	protected $modificationDate;
 
@@ -137,13 +140,13 @@ abstract class Tx_Fluidbackend_Outlet_AbstractOutlet {
 	/**
 	 * @param string $outlet
 	 * @return void
-	 * @throws Exception
+	 * @throws \Exception
 	 */
 	public function setOutlet($outlet) {
-		if (FALSE === class_exists('Tx_Fluidbackend_Outlet_' . $outlet . 'Outlet')) {
+		if (FALSE === class_exists('FluidTYPO3\Fluidbackend\Outlet\\' . $outlet . 'Outlet')) {
 			if (FALSE === class_exists($outlet)) {
-				throw new Exception('Outlet type"' . $outlet . '" was neither a fully qualified class name nor a name of a ' .
-					'built-in Processor (as Tx_Fluidbackend_Outlet_<strong>Identity</strong>Outlet', 1368317785);
+				throw new \Exception('Outlet type"' . $outlet . '" was neither a fully qualified class name nor a name of a ' .
+					'built-in Processor (as FluidTYPO3\Fluidbackend\Outlet\<strong>Identity</strong>Outlet', 1368317785);
 			}
 		}
 		$this->outlet = $outlet;
@@ -157,7 +160,7 @@ abstract class Tx_Fluidbackend_Outlet_AbstractOutlet {
 	}
 
 	/**
-	 * @param DateTime $modificationDate
+	 * @param \DateTime $modificationDate
 	 * @return void
 	 */
 	public function setModificationDate($modificationDate) {
@@ -165,11 +168,11 @@ abstract class Tx_Fluidbackend_Outlet_AbstractOutlet {
 	}
 
 	/**
-	 * @return DateTime
+	 * @return \DateTime
 	 */
 	public function getModificationDate() {
 		if (!$this->modificationDate) {
-			return DateTime::createFromFormat('U', 0);
+			return \DateTime::createFromFormat('U', 0);
 		}
 		return $this->modificationDate;
 	}
@@ -186,9 +189,9 @@ abstract class Tx_Fluidbackend_Outlet_AbstractOutlet {
 	 * @param integer $severity
 	 * @return void
 	 */
-	protected function message($message, $severity = t3lib_FlashMessage::OK) {
-		$flashMessage = new t3lib_FlashMessage($message, $this->getName() . ': ' . $this->getLabel(), $severity, TRUE);
-		t3lib_FlashMessageQueue::addMessage($flashMessage);
+	protected function message($message, $severity = FlashMessage::OK) {
+		$flashMessage = new FlashMessage($message, $this->getName() . ': ' . $this->getLabel(), $severity, TRUE);
+        FlashMessageQueue::addMessage($flashMessage);
 	}
 
 }

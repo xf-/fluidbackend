@@ -1,4 +1,5 @@
 <?php
+namespace FluidTYPO3\Fluidbackend\Override\Backend\Module;
 /***************************************************************
  *  Copyright notice
  *
@@ -22,6 +23,7 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Override: sysext "backend" ModuleLoader
@@ -32,17 +34,17 @@
  * @package Fluidbackend
  * @subpackage Override\Backend\Controller
  */
-class Tx_Fluidbackend_Override_Backend_Module_ModuleLoader extends \TYPO3\CMS\Backend\Module\ModuleLoader {
+class ModuleLoader extends \TYPO3\CMS\Backend\Module\ModuleLoader {
 
 	/**
 	 * @param array $modulesArray
 	 * @param string $BE_USER
 	 */
 	public function load($modulesArray, $BE_USER = '') {
-		/** @var $objectManager Tx_Extbase_Object_ObjectManagerInterface */
-		$objectManager = t3lib_div::makeInstance('Tx_Extbase_Object_ObjectManager');
-		/** @var $configurationService Tx_Fluidbackend_Service_ConfigurationService */
-		$configurationService = $objectManager->get('Tx_Fluidbackend_Service_ConfigurationService');
+		/** @var $objectManager \TYPO3\CMS\Extbase\Object\ObjectManager */
+		$objectManager = GeneralUtility::makeInstance('TYPO3\CMS\Extbase\Object\ObjectManager');
+		/** @var $configurationService \FluidTYPO3\Fluidbackend\Service\ConfigurationService */
+		$configurationService = $objectManager->get('FluidTYPO3\Fluidbackend\Service\ConfigurationService');
 		$configurationService->detectAndRegisterAllFluidBackendModules();
 		$modulesArray = $GLOBALS['TBE_MODULES'];
 		parent::load($modulesArray, $BE_USER);

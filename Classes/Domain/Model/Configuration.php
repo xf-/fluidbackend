@@ -1,4 +1,6 @@
 <?php
+namespace FluidTYPO3\Fluidbackend\Domain\Model;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -22,6 +24,7 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  *****************************************************************/
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 /**
  * ### Module Configuration Model
@@ -31,7 +34,7 @@
  * @package Fluidbackend
  * @subpackage Domain\Model
  */
-class Tx_Fluidbackend_Domain_Model_Configuration extends Tx_Extbase_DomainObject_AbstractEntity {
+class Configuration extends AbstractEntity {
 
 	/**
 	 * @var string

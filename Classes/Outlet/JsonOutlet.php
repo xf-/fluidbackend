@@ -1,4 +1,5 @@
 <?php
+namespace FluidTYPO3\Fluidbackend\Outlet;
 /***************************************************************
  *  Copyright notice
  *
@@ -22,6 +23,7 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  *****************************************************************/
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * ## Outlet Definition: JSON file Outlet
@@ -31,7 +33,7 @@
  * @package Fluidbackend
  * @subpackage Outlet
  */
-class Tx_Fluidbackend_Outlet_JsonOutlet extends Tx_Fluidbackend_Outlet_AbstractOutlet implements Tx_Fluidbackend_Outlet_OutletInterface {
+class JsonOutlet extends AbstractOutlet implements OutletInterface {
 
 	/**
 	 * @var string
@@ -87,11 +89,11 @@ class Tx_Fluidbackend_Outlet_JsonOutlet extends Tx_Fluidbackend_Outlet_AbstractO
 	}
 
 	/**
-	 * @return DateTime
+	 * @return \DateTime
 	 */
 	public function getModificationDate() {
 		if (TRUE === file_exists($this->getFilePathAndFilename())) {
-			return DateTime::createFromFormat('U', filemtime($this->getFilePathAndFilename()));
+			return \DateTime::createFromFormat('U', filemtime($this->getFilePathAndFilename()));
 		}
 		return parent::getModificationDate();
 	}
@@ -117,7 +119,7 @@ class Tx_Fluidbackend_Outlet_JsonOutlet extends Tx_Fluidbackend_Outlet_AbstractO
 		} else {
 			$json = json_encode($data);
 		}
-		t3lib_div::writeFile($this->getFilePathAndFilename(), $json);
+        GeneralUtility::writeFile($this->getFilePathAndFilename(), $json);
 		$this->message('JSON produced into file ' . $this->getFilePathAndFilename());
 	}
 
