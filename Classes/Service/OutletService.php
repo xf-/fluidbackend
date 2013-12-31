@@ -3,7 +3,7 @@ namespace FluidTYPO3\Fluidbackend\Service;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012 Claus Due <claus@wildside.dk>, Wildside A/S
+ *  (c) 2014 Claus Due <claus@namelesscoder.net>
  *
  *  All rights reserved
  *
@@ -32,7 +32,7 @@ use FluidTYPO3\Fluidbackend\Outlet\OutletInterface;
  * Provides methods to cause Outlets to produce their
  * respective output as configured by each Outlet.
  *
- * @author Claus Due, Wildside A/S
+ * @author Claus Due
  * @package Fluidbackend
  * @subpackage Service
  */

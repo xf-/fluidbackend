@@ -3,7 +3,7 @@ namespace FluidTYPO3\Fluidbackend\Service;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012 Claus Due <claus@wildside.dk>, Wildside A/S
+ *  (c) 2014 Claus Due <claus@namelesscoder.net>
  *
  *  All rights reserved
  *
@@ -38,7 +38,7 @@ use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
  * Provides methods to read various configuration related
  * to Flux Backend Modules.
  *
- * @author Claus Due, Wildside A/S
+ * @author Claus Due
  * @package Fluidbackend
  * @subpackage Service
  */
