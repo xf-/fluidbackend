@@ -1,8 +1,9 @@
 <?php
+namespace FluidTYPO3\Fluidbackend\Controller;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2013 Claus Due <claus@wildside.dk>, Wildside A/S
+ *  (c) 2014 Claus Due <claus@namelesscoder.net>
  *
  *  All rights reserved
  *
@@ -33,6 +34,6 @@
  * @subpackage Controller
  * @route off
  */
-class Tx_Fluidbackend_Controller_BackendController extends Tx_Fluidbackend_Controller_AbstractBackendController {
+class BackendController extends AbstractBackendController {
 
 }

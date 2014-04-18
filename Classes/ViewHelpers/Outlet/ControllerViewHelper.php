@@ -1,8 +1,9 @@
 <?php
+namespace FluidTYPO3\Fluidbackend\ViewHelpers\Outlet;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2013 Claus Due <claus@wildside.dk>, Wildside A/S
+ *  (c) 2014 Claus Due <claus@namelesscoder.net>
  *
  *  All rights reserved
  *
@@ -22,6 +23,8 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  *****************************************************************/
+use FluidTYPO3\Fluidbackend\Outlet\OutletInterface;
+use FluidTYPO3\Fluidbackend\Outlet\ControllerOutlet;
 
 /**
  * ### Controller Outlet Definition ViewHelper
@@ -65,7 +68,7 @@
  * @package Fluidbackend
  * @subpackage ViewHelpers\Outlet
  */
-class Tx_Fluidbackend_ViewHelpers_Outlet_ControllerViewHelper extends Tx_Fluidbackend_ViewHelpers_Outlet_AbstractOutletViewHelper {
+class ControllerViewHelper extends AbstractOutletViewHelper {
 
 	/**
 	 * @var string
@@ -84,7 +87,7 @@ class Tx_Fluidbackend_ViewHelpers_Outlet_ControllerViewHelper extends Tx_Fluidba
 	}
 
 	/**
-	 * @return Tx_Fluidbackend_Outlet_OutletInterface
+	 * @return OutletInterface
 	 */
 	protected function createOutletFromArguments() {
 		if (TRUE === empty($this->arguments['extensionName'])) {
@@ -99,7 +102,7 @@ class Tx_Fluidbackend_ViewHelpers_Outlet_ControllerViewHelper extends Tx_Fluidba
 		} else {
 			$arguments = $this->arguments['arguments'];
 		}
-		/** @var $outlet Tx_Fluidbackend_Outlet_ControllerOutlet */
+		/** @var $outlet ControllerOutlet */
 		$outlet = parent::createOutletFromArguments();
 		$outlet->setController($this->arguments['controller']);
 		$outlet->setAction($this->arguments['action']);

@@ -1,8 +1,9 @@
 <?php
+namespace FluidTYPO3\Fluidbackend\Controller;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2013 Claus Due <claus@wildside.dk>, Wildside A/S
+ *  (c) 2014 Claus Due <claus@namelesscoder.net>
  *
  *  All rights reserved
  *
@@ -22,6 +23,14 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use FluidTYPO3\Fluidbackend\Domain\Repository\ConfigurationRepository;
+use FluidTYPO3\Fluidbackend\Domain\Model\Configuration;
+use FluidTYPO3\Fluidbackend\Outlet\OutletInterface;
+use FluidTYPO3\Fluidbackend\Service\OutletService;
+use FluidTYPO3\Flux\Controller\AbstractFluxController;
+
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 
 /**
  * Abstract Backend Controller
@@ -29,7 +38,7 @@
  * @package Fluidbackend
  * @subpackage Controller
  */
-class Tx_Fluidbackend_Controller_AbstractBackendController extends Tx_Flux_Controller_AbstractFluxController {
+class AbstractBackendController extends AbstractFluxController {
 
 	/**
 	 * @var string
@@ -37,22 +46,22 @@ class Tx_Fluidbackend_Controller_AbstractBackendController extends Tx_Flux_Contr
 	const SAVE_ACTION = 'save';
 
 	/**
-	 * @var Tx_Fluidbackend_Domain_Repository_ConfigurationRepository
+	 * @var ConfigurationRepository
 	 */
 	protected $configurationRepository;
 
 	/**
-	 * @var Tx_Fluidbackend_Service_OutletService
+	 * @var OutletService
 	 */
 	protected $outletService;
 
 	/**
-	 * @var Tx_Fluidbackend_Domain_Model_Configuration
+	 * @var Configuration
 	 */
 	protected $configuration;
 
 	/**
-	 * @var t3lib_TCEforms
+	 * @var \TYPO3\CMS\Backend\Form\FormEngine
 	 */
 	protected $formHandler;
 
@@ -67,31 +76,32 @@ class Tx_Fluidbackend_Controller_AbstractBackendController extends Tx_Flux_Contr
 	protected $fluxRecordField = 'configuration';
 
 	/**
-	 * @param Tx_Fluidbackend_Domain_Repository_ConfigurationRepository $configurationRepository
+	 * @param ConfigurationRepository $configurationRepository
 	 * @return void
 	 */
-	public function injectConfigurationRepository(Tx_Fluidbackend_Domain_Repository_ConfigurationRepository $configurationRepository) {
+	public function injectConfigurationRepository(ConfigurationRepository $configurationRepository) {
 		$this->configurationRepository = $configurationRepository;
 	}
 
 	/**
-	 * @param Tx_Fluidbackend_Service_OutletService $outletService
+	 * @param OutletService $outletService
 	 * @return void
 	 */
-	public function injectOutletService(Tx_Fluidbackend_Service_OutletService $outletService) {
+	public function injectOutletService(OutletService $outletService) {
 		$this->outletService = $outletService;
 	}
 
 	/**
-	 * @param Tx_Extbase_MVC_View_ViewInterface $view
+	 * @param ViewInterface $view
 	 * @return void
 	 */
-	public function initializeView(Tx_Extbase_MVC_View_ViewInterface $view) {
+	public function initializeView(ViewInterface $view) {
+
 		parent::initializeView($view);
 		$name = $this->getCurrentConfigurationName();
 		$pageUid = $this->getCurrentPageUid();
 		$this->configuration = $this->configurationRepository->findOrCreateOneByNameInPid($name, $pageUid);
-		$this->formHandler = $this->objectManager->get('t3lib_TCEforms');
+		$this->formHandler = $this->objectManager->get('TYPO3\CMS\Backend\Form\FormEngine');
 		$this->formHandler->initDefaultBEmode();
 		$this->formHandler->enableClickMenu = TRUE;
 		$this->formHandler->enableTabMenu = TRUE;
@@ -107,11 +117,12 @@ class Tx_Fluidbackend_Controller_AbstractBackendController extends Tx_Flux_Contr
 		if (TRUE === isset($moduleData['outlets'])) {
 			$outlets = $moduleData['outlets'];
 		} else {
-			/** @var $outlet Tx_Fluidbackend_Outlet_FlashMessageOutlet */
-			$outlet = $this->objectManager->get('Tx_Fluidbackend_Outlet_FlashMessageOutlet');
+			/** @var $outlet \FluidTYPO3\Fluidbackend\Outlet\FlashMessageOutlet */
+			$outlet = $this->objectManager->get('FluidTYPO3\Fluidbackend\Outlet\FlashMessageOutlet');
 			$outlet->setName('default');
 			$outlet->setLabel('No Outlets defined');
 			$outlets = array($outlet);
+
 		}
 		return $outlets;
 	}
@@ -120,7 +131,7 @@ class Tx_Fluidbackend_Controller_AbstractBackendController extends Tx_Flux_Contr
 	 * @return integer
 	 */
 	protected function getCurrentPageUid() {
-		$pageUid = t3lib_div::_GET('id');
+		$pageUid = GeneralUtility::_GET('id');
 		return intval($pageUid);
 	}
 
@@ -132,9 +143,9 @@ class Tx_Fluidbackend_Controller_AbstractBackendController extends Tx_Flux_Contr
 			return $this->request->getArgument('configurationName');
 		}
 		$data = $this->getData();
-		$module = t3lib_div::_GET('M');
+		$module = GeneralUtility::_GET('M');
 		if (FALSE === empty($module)) {
-			$id = array_pop(explode('_', t3lib_div::camelCaseToLowerCaseUnderscored($module)));
+			$id = array_pop(explode('_', GeneralUtility::camelCaseToLowerCaseUnderscored($module)));
 		} else {
 			$id = $data['id'];
 		}
@@ -209,11 +220,11 @@ class Tx_Fluidbackend_Controller_AbstractBackendController extends Tx_Flux_Contr
 	}
 
 	/**
-	 * @param Tx_Fluidbackend_Outlet_OutletInterface $outlet
+	 * @param OutletInterface $outlet
 	 * @param array $settings
 	 * @return array
 	 */
-	protected function beforeOutlet(Tx_Fluidbackend_Outlet_OutletInterface $outlet, array $settings) {
+	protected function beforeOutlet(OutletInterface $outlet, array $settings) {
 		return $settings;
 	}
 
@@ -226,11 +237,11 @@ class Tx_Fluidbackend_Controller_AbstractBackendController extends Tx_Flux_Contr
 	 * save a post-result, use this method to ensure the Outlet has
 	 * not produced any errors).
 	 *
-	 * @param Tx_Fluidbackend_Outlet_OutletInterface $outlet
+	 * @param OutletInterface $outlet
 	 * @param array $settings
 	 * @return void
 	 */
-	protected function afterOutlet(Tx_Fluidbackend_Outlet_OutletInterface $outlet, array $settings) {
+	protected function afterOutlet(OutletInterface $outlet, array $settings) {
 	}
 
 	/**
@@ -238,13 +249,13 @@ class Tx_Fluidbackend_Controller_AbstractBackendController extends Tx_Flux_Contr
 	 * override this method and it does NOT re-throw the Exception,
 	 * processing will continue (skipping the current Outlet).
 	 *
-	 * @param Tx_Fluidbackend_Outlet_OutletInterface $outlet
+	 * @param OutletInterface $outlet
 	 * @param array $settings
-	 * @param Exception $error
+	 * @param \Exception $error
 	 * @return void
-	 * @throws Exception
+	 * @throws \Exception
 	 */
-	protected function onOutletError(Tx_Fluidbackend_Outlet_OutletInterface $outlet, array $settings, Exception $error) {
+	protected function onOutletError(OutletInterface $outlet, array $settings, \Exception $error) {
 		throw $error;
 	}
 
@@ -277,7 +288,7 @@ class Tx_Fluidbackend_Controller_AbstractBackendController extends Tx_Flux_Contr
 				$localSettings = $this->beforeOutlet($outlet, $localSettings);
 				$this->outletService->produce($outlet, $localSettings);
 				$this->afterOutlet($outlet, $localSettings);
-			} catch (Exception $outletError) {
+			} catch (\Exception $outletError) {
 				$this->onOutletError($outlet, $localSettings, $outletError);
 			}
 		}
@@ -303,7 +314,7 @@ class Tx_Fluidbackend_Controller_AbstractBackendController extends Tx_Flux_Contr
 	 * @return void
 	 */
 	protected function updateConfigurationStorage(array $settings) {
-		$dom = new DOMDocument('1.0', 'utf-8');
+		$dom = new \DOMDocument('1.0', 'utf-8');
 		$root = $dom->appendChild($dom->createElement('T3FlexForms'));
 		$data = $root->appendChild($dom->createElement('data'));
 		foreach ($settings as $sheetName => $fieldValues) {
@@ -329,12 +340,12 @@ class Tx_Fluidbackend_Controller_AbstractBackendController extends Tx_Flux_Contr
 	}
 
 	/**
-	 * @param DOMDocument $dom
-	 * @param DOMNode $element
+	 * @param \DOMDocument $dom
+	 * @param \DOMNode $element
 	 * @param string $indexValue
-	 * @return DOMNode
+	 * @return \DOMNode
 	 */
-	protected function addIndexAttribute(DOMDocument $dom, DOMNode $element, $indexValue) {
+	protected function addIndexAttribute(\DOMDocument $dom, \DOMNode $element, $indexValue) {
 		$index = $dom->createAttribute('index');
 		$index->value = $indexValue;
 		$element->appendChild($index);

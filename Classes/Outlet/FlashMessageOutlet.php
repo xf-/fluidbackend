@@ -1,8 +1,9 @@
 <?php
+namespace FluidTYPO3\Fluidbackend\Outlet;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2013 Claus Due <claus@wildside.dk>, Wildside A/S
+ *  (c) 2014 Claus Due <claus@namelesscoder.net>
  *
  *  All rights reserved
  *
@@ -22,6 +23,8 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  *****************************************************************/
+use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Core\Messaging\FlashMessageQueue;
 
 /**
  * ## Outlet Definition: Flash Message Outlet
@@ -33,7 +36,7 @@
  * @package Fluidbackend
  * @subpackage Outlet
  */
-class Tx_Fluidbackend_Outlet_FlashMessageOutlet extends Tx_Fluidbackend_Outlet_AbstractOutlet implements Tx_Fluidbackend_Outlet_OutletInterface {
+class FlashMessageOutlet extends AbstractOutlet implements OutletInterface {
 
 	/**
 	 * @var string
@@ -43,7 +46,7 @@ class Tx_Fluidbackend_Outlet_FlashMessageOutlet extends Tx_Fluidbackend_Outlet_A
 	/**
 	 * @var integer
 	 */
-	protected $severity = t3lib_FlashMessage::OK;
+	protected $severity = FlashMessage::OK;
 
 	/**
 	 * @var boolean
@@ -55,9 +58,9 @@ class Tx_Fluidbackend_Outlet_FlashMessageOutlet extends Tx_Fluidbackend_Outlet_A
 	 * @return void
 	 */
 	public function produce(array $data) {
-		$flashMessage = new t3lib_FlashMessage($this->getLabel() . ': <br /><pre>' . var_export($data, TRUE) . '</pre>',
+		$flashMessage = new FlashMessage($this->getLabel() . ': <br /><pre>' . var_export($data, TRUE) . '</pre>',
 			$this->getName(), $this->getSeverity(), TRUE);
-		t3lib_FlashMessageQueue::addMessage($flashMessage);
+        FlashMessageQueue::addMessage($flashMessage);
 	}
 
 	/**

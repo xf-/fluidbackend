@@ -1,8 +1,9 @@
 <?php
+namespace FluidTYPO3\Fluidbackend\Provider\Configuration;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2013 Claus Due <claus@wildside.dk>, Wildside A/S
+ *  (c) 2014 Claus Due <claus@namelesscoder.net>
  *
  *  All rights reserved
  *
@@ -22,17 +23,21 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use FluidTYPO3\Flux\Provider\ProviderInterface;
+use FluidTYPO3\Flux\Provider\AbstractProvider;
+use FluidTYPO3\Flux\Utility\PathUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Configuration Provider for EXT:fluidbackend storage records
  *
- * @author Claus Due, Wildside A/S
+ * @author Claus Due
  * @package Fluidbackend
  * @subpackage Provider\Configuration
  */
-class Tx_Fluidbackend_Provider_Configuration_StorageConfigurationProvider
-	extends Tx_Flux_Provider_AbstractProvider
-	implements Tx_Flux_Provider_ConfigurationProviderInterface {
+class StorageConfigurationProvider
+	extends AbstractProvider
+	implements ProviderInterface {
 
 	/**
 	 * @var string
@@ -56,9 +61,9 @@ class Tx_Fluidbackend_Provider_Configuration_StorageConfigurationProvider
 		if (NULL !== $this->extensionKeyAndAction) {
 			return $this->extensionKeyAndAction;
 		}
-		list ($module, $identifier) = explode('_', t3lib_div::_GET('M'));
+		list ($module, $identifier) = explode('_', GeneralUtility::_GET('M'));
 		list ($signature) = explode('_', $identifier);
-		$signature = t3lib_div::camelCaseToLowerCaseUnderscored($signature);
+		$signature = GeneralUtility::camelCaseToLowerCaseUnderscored($signature);
 		list ($parent, $extensionKeyAndAction) = explode('_tx_', $signature);
 		unset($module, $parent);
 		$this->extensionKeyAndAction = explode('_', $extensionKeyAndAction);
@@ -84,7 +89,7 @@ class Tx_Fluidbackend_Provider_Configuration_StorageConfigurationProvider
 	public function getExtensionKey(array $row) {
 		if (TRUE === isset($row['name'])) {
 			list ($extensionName, , ) = explode('-', $row['name']);
-			$extensionKey = t3lib_div::camelCaseToLowerCaseUnderscored($extensionName);
+			$extensionKey = GeneralUtility::camelCaseToLowerCaseUnderscored($extensionName);
 		} else {
 			list ($extensionKey, ) = $this->getExtensionKeyAndActionFromUrl();
 		}
@@ -98,7 +103,7 @@ class Tx_Fluidbackend_Provider_Configuration_StorageConfigurationProvider
 	public function getTemplatePaths(array $row) {
 		$extensionKey = $this->getExtensionKey($row);
 		$paths = $this->configurationService->getTypoScriptSubConfiguration(NULL, 'view', $extensionKey);
-		$paths = Tx_Flux_Utility_Path::translatePath($paths);
+		$paths = PathUtility::translatePath($paths);
 		return $paths;
 	}
 
@@ -119,7 +124,7 @@ class Tx_Fluidbackend_Provider_Configuration_StorageConfigurationProvider
 	 */
 	public function getFlexFormValues(array $row) {
 		$extensionKey = $this->getExtensionKey($row);
-		$extensionName = t3lib_div::underscoredToUpperCamelCase($extensionKey);
+		$extensionName = GeneralUtility::underscoredToUpperCamelCase($extensionKey);
 		$paths = $this->getTemplatePaths($row);
 		$values = array();
 		$section = $this->getConfigurationSectionName($row);

@@ -2,11 +2,12 @@
 if (!defined ('TYPO3_MODE')) {
 	die ('Access denied.');
 }
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
-Tx_Flux_Core::registerConfigurationProvider('Tx_Fluidbackend_Provider_Configuration_StorageConfigurationProvider');
-t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript', 'Fluid Backend: Configuration');
+FluidTYPO3\Flux\Core::registerConfigurationProvider('FluidTYPO3\Fluidbackend\Provider\Configuration\StorageConfigurationProvider');
+ExtensionManagementUtility::addStaticFile($_EXTKEY, 'Configuration/TypoScript', 'Fluid Backend: Configuration');
 
-t3lib_extMgm::allowTableOnStandardPages('tx_fluidbackend_domain_model_configuration');
+ExtensionManagementUtility::allowTableOnStandardPages('tx_fluidbackend_domain_model_configuration');
 $TCA['tx_fluidbackend_domain_model_configuration'] = array(
 	'ctrl' => array(
 		'title'     => 'LLL:EXT:fluidbackend/Resources/Private/Language/locallang_db.xml:tx_fluidbackend_domain_model_configuration',
@@ -28,8 +29,8 @@ $TCA['tx_fluidbackend_domain_model_configuration'] = array(
 		'enablecolumns' => array(
 			'disabled' => 'hidden',
 		),
-		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/Configuration.php',
-		'iconfile'          => t3lib_extMgm::extRelPath($_EXTKEY) . 'ext_icon.gif',
+		'dynamicConfigFile' => ExtensionManagementUtility::extPath($_EXTKEY) . 'Configuration/TCA/Configuration.php',
+		'iconfile'          => ExtensionManagementUtility::extRelPath($_EXTKEY) . 'ext_icon.gif',
 		'searchFields' => 'uid,name,label',
 		'requestUpdate' => '',
 	),

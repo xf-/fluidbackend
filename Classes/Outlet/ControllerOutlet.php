@@ -1,8 +1,9 @@
 <?php
+namespace FluidTYPO3\Fluidbackend\Outlet;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2013 Claus Due <claus@wildside.dk>, Wildside A/S
+ *  (c) 2014 Claus Due <claus@namelesscoder.net>
  *
  *  All rights reserved
  *
@@ -22,6 +23,7 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  *****************************************************************/
+use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 
 /**
  * ## Outlet Definition: Controller Action
@@ -33,10 +35,10 @@
  * @package Fluidbackend
  * @subpackage Outlet
  */
-class Tx_Fluidbackend_Outlet_ControllerOutlet extends Tx_Fluidbackend_Outlet_AbstractOutlet implements Tx_Fluidbackend_Outlet_OutletInterface {
+class ControllerOutlet extends AbstractOutlet implements OutletInterface {
 
 	/**
-	 * @var Tx_Extbase_Object_ObjectManagerInterface
+	 * @var ObjectManagerInterface
 	 */
 	protected $objectManager;
 
@@ -66,10 +68,10 @@ class Tx_Fluidbackend_Outlet_ControllerOutlet extends Tx_Fluidbackend_Outlet_Abs
 	protected $outlet = 'Controller';
 
 	/**
-	 * @param Tx_Extbase_Object_ObjectManagerInterface $objectManager
+	 * @param ObjectManagerInterface $objectManager
 	 * @return void
 	 */
-	public function injectObjectManager(Tx_Extbase_Object_ObjectManagerInterface $objectManager) {
+	public function injectObjectManager(ObjectManagerInterface $objectManager) {
 		$this->objectManager = $objectManager;
 	}
 
@@ -146,17 +148,17 @@ class Tx_Fluidbackend_Outlet_ControllerOutlet extends Tx_Fluidbackend_Outlet_Abs
 	 */
 	public function produce(array $data) {
 		$arguments = (array) $this->getArguments();
-		/** @var $request Tx_Extbase_MVC_Web_Request */
-		$request = $this->objectManager->get('Tx_Extbase_MVC_Web_Request');
+		/** @var $request \TYPO3\CMS\Extbase\Mvc\Web\Request */
+		$request = $this->objectManager->get('TYPO3\CMS\Extbase\Mvc\Web\Request');
 		$request->setControllerName($this->getController());
 		$request->setControllerActionName($this->getAction());
 		$request->setControllerExtensionName($this->getExtensionName());
 		$request->setArguments($arguments);
 		$request->setArgument('settings', $data);
-		/** @var $response Tx_Extbase_MVC_Web_Response */
-		$response = $this->objectManager->get('Tx_Extbase_MVC_Web_Response');
-		/** @var $dispatcher Tx_Extbase_MVC_Dispatcher */
-		$dispatcher = $this->objectManager->get('Tx_Extbase_MVC_Dispatcher');
+		/** @var $response \TYPO3\CMS\Extbase\Mvc\Web\Response */
+		$response = $this->objectManager->get('TYPO3\CMS\Extbase\Mvc\Web\Response');
+		/** @var $dispatcher \TYPO3\CMS\Extbase\Mvc\Dispatcher */
+		$dispatcher = $this->objectManager->get('TYPO3\CMS\Extbase\Mvc\Dispatcher');
 		$dispatcher->dispatch($request, $response);
 		$output = $response->getContent();
 		$this->message($output);

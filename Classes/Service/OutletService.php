@@ -1,8 +1,9 @@
 <?php
+namespace FluidTYPO3\Fluidbackend\Service;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012 Claus Due <claus@wildside.dk>, Wildside A/S
+ *  (c) 2014 Claus Due <claus@namelesscoder.net>
  *
  *  All rights reserved
  *
@@ -22,6 +23,8 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use TYPO3\CMS\Core\SingletonInterface;
+use FluidTYPO3\Fluidbackend\Outlet\OutletInterface;
 
 /**
  * ### Outlet Execution Service
@@ -29,11 +32,11 @@
  * Provides methods to cause Outlets to produce their
  * respective output as configured by each Outlet.
  *
- * @author Claus Due, Wildside A/S
+ * @author Claus Due
  * @package Fluidbackend
  * @subpackage Service
  */
-class Tx_Fluidbackend_Service_OutletService implements t3lib_Singleton {
+class OutletService implements SingletonInterface {
 
 	/**
 	 * @param mixed $post
@@ -54,13 +57,13 @@ class Tx_Fluidbackend_Service_OutletService implements t3lib_Singleton {
 	}
 
 	/**
-	 * @param array|Tx_Fluidbackend_Outlet_OutletInterface $outletOrOutlets
+	 * @param OutletInterface[]|OutletInterface $outletOrOutlets
 	 * @param array $data
 	 * @return void
-	 * @throws Exception
+	 * @throws \Exception
 	 */
 	public function produce($outletOrOutlets, $data) {
-		if (TRUE === $outletOrOutlets instanceof Tx_Fluidbackend_Outlet_OutletInterface) {
+		if (TRUE === $outletOrOutlets instanceof OutletInterface) {
 			$outletOrOutlets->produce($data);
 		} else {
 			foreach ($outletOrOutlets as $outlet) {

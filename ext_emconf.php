@@ -15,7 +15,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'description' => 'Fluid Backend engine - create easy backend modules based on Flux forms',
 	'category' => 'be',
 	'author' => 'Claus Due',
-	'author_email' => 'claus@wildside.dk',
+	'author_email' => 'claus@namelesscoder.net',
 	'author_company' => 'Wildside A/S',
 	'shy' => '',
 	'dependencies' => 'cms,flux',
@@ -29,12 +29,12 @@ $EM_CONF[$_EXTKEY] = array(
 	'modify_tables' => '',
 	'clearCacheOnLoad' => 1,
 	'lockType' => '',
-	'version' => '0.9.1',
+	'version' => '0.9.2dev',
 	'constraints' => array(
 		'depends' => array(
-			'typo3' => '6.0.0-6.1.99',
+			'typo3' => '6.0.0-6.2.99',
 			'cms' => '',
-			'flux' => '6.0.0',
+			'flux' => '6.0.2',
 		),
 		'conflicts' => array(
 		),

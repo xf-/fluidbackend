@@ -1,8 +1,9 @@
 <?php
+namespace FluidTYPO3\Fluidbackend\Service;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012 Claus Due <claus@wildside.dk>, Wildside A/S
+ *  (c) 2014 Claus Due <claus@namelesscoder.net>
  *
  *  All rights reserved
  *
@@ -22,6 +23,14 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use FluidTYPO3\Flux\Core;
+use FluidTYPO3\Flux\Service\FluxService;
+use FluidTYPO3\Flux\Utility\ResolveUtility;
+use FluidTYPO3\Flux\Utility\PathUtility;
+use TYPO3\CMS\Core\SingletonInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 
 /**
  * Configuration Service
@@ -29,20 +38,20 @@
  * Provides methods to read various configuration related
  * to Flux Backend Modules.
  *
- * @author Claus Due, Wildside A/S
+ * @author Claus Due
  * @package Fluidbackend
  * @subpackage Service
  */
-class Tx_Fluidbackend_Service_ConfigurationService extends Tx_Flux_Service_FluxService implements t3lib_Singleton {
+class ConfigurationService extends FluxService implements SingletonInterface {
 
 	/**
 	 * @param string $extensionName
 	 * @return array
 	 */
 	public function getBackendModuleTemplatePaths($extensionName = NULL) {
-		$typoScript = $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+		$typoScript = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
 		$paths = array();
-		$extensionKeys = Tx_Flux_Core::getRegisteredProviderExtensionKeys('Backend');
+		$extensionKeys = Core::getRegisteredProviderExtensionKeys('Backend');
 		foreach ($extensionKeys as $extensionKey) {
 			$pluginSignature = str_replace('_', '', $extensionKey);
 			if (TRUE === isset($typoScript['plugin.']['tx_' . $pluginSignature . '.']['view.'])) {
@@ -57,7 +66,7 @@ class Tx_Fluidbackend_Service_ConfigurationService extends Tx_Flux_Service_FluxS
 	 * @param string $extensionKey
 	 * @param array $fluxConfiguration
 	 * @return void
-	 * @throws Exception
+	 * @throws \Exception
 	 */
 	public function registerModuleBasedOnFluxForm($extensionKey, array $fluxConfiguration) {
 		$module = 'web';
@@ -72,14 +81,14 @@ class Tx_Fluidbackend_Service_ConfigurationService extends Tx_Flux_Service_FluxS
 		if (TRUE === isset($fluxConfiguration['modulePageTree']) && TRUE === (boolean) $fluxConfiguration['modulePageTree']) {
 			$navigationComponent = 'typo3-pagetree';
 		}
-		$extensionKey = t3lib_div::camelCaseToLowerCaseUnderscored($extensionKey);
+		$extensionKey = GeneralUtility::camelCaseToLowerCaseUnderscored($extensionKey);
 		$extensionKey = strtolower($extensionKey);
 		$icon = 'EXT:' . $extensionKey . '/ext_icon.gif';
 		if ($fluxConfiguration['icon']) {
 			$icon = $fluxConfiguration['icon'];
 		}
-		if (NULL === Tx_Flux_Utility_Resolve::resolveFluxControllerClassNameByExtensionKeyAndAction($extensionKey, 'render', 'Backend')) {
-			throw new Exception('Attempt to register a Backend controller without an associated BackendController. Extension key: ' . $extensionKey, 1368826271);
+		if (NULL === ResolveUtility::resolveFluxControllerClassNameByExtensionKeyAndAction($extensionKey, 'render', 'Backend')) {
+			throw new \Exception('Attempt to register a Backend controller without an associated BackendController. Extension key: ' . $extensionKey, 1368826271);
 		}
 		$signature = str_replace('_', '', $extensionKey);
 		$moduleConfiguration = array(
@@ -95,7 +104,7 @@ class Tx_Fluidbackend_Service_ConfigurationService extends Tx_Flux_Service_FluxS
 			if (FALSE === strpos($position, ':')) {
 				if ('top' === $position) {
 					$temp_TBE_MODULES = array($module => '');
-					$temp_TBE_MODULES = t3lib_div::array_merge_recursive_overrule($temp_TBE_MODULES, $GLOBALS['TBE_MODULES']);
+					$temp_TBE_MODULES = GeneralUtility::array_merge_recursive_overrule($temp_TBE_MODULES, $GLOBALS['TBE_MODULES']);
 				} else {
 					$temp_TBE_MODULES = $GLOBALS['TBE_MODULES'];
 					$temp_TBE_MODULES[$module] = '';
@@ -118,9 +127,9 @@ class Tx_Fluidbackend_Service_ConfigurationService extends Tx_Flux_Service_FluxS
 			}
 			$GLOBALS['TBE_MODULES'] = $temp_TBE_MODULES;
 			$moduleConfiguration['labels'] = 'LLL:EXT:' . $extensionKey . '/Resources/Private/Language/locallang_module_' . $module . '.xml';
-			Tx_Extbase_Utility_Extension::registerModule($extensionKey, $module, '', $position, array('Backend' => 'render,save'), $moduleConfiguration);
+            ExtensionUtility::registerModule($extensionKey, $module, '', $position, array('Backend' => 'render,save'), $moduleConfiguration);
 		}
-		Tx_Extbase_Utility_Extension::registerModule(
+        ExtensionUtility::registerModule(
 			$extensionKey,
 			$module,
 			$moduleSignature,
@@ -138,10 +147,10 @@ class Tx_Fluidbackend_Service_ConfigurationService extends Tx_Flux_Service_FluxS
 	public function detectAndRegisterAllFluidBackendModules() {
 		$configurations = $this->getBackendModuleTemplatePaths();
 		foreach ($configurations as $extensionKey => $paths) {
-			$extensionName = t3lib_div::underscoredToUpperCamelCase($extensionKey);
-			$paths = Tx_Flux_Utility_Path::translatePath($paths);
+			$extensionName = GeneralUtility::underscoredToUpperCamelCase($extensionKey);
+			$paths = PathUtility::translatePath($paths);
 			$directoryPath = $paths['templateRootPath'] . '/Backend/';
-			$files = t3lib_div::getFilesInDir($directoryPath, 'html');
+			$files = GeneralUtility::getFilesInDir($directoryPath, 'html');
 			foreach ($files as $fileName) {
 				$templatePathAndFilename = $directoryPath . $fileName;
 				$storedConfiguration = $this->getFlexFormConfigurationFromFile($templatePathAndFilename, array(), 'Configuration', $paths, $extensionName);
