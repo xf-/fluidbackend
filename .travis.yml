@@ -1,23 +1,26 @@
 language: php
+
 php:
   - 5.3
   - 5.4
   - 5.5
+  - 5.6
 
 env:
-  - DB=mysql
+  - DB=mysql INTEGRATION=master
 
 before_script:
   - export REPOSITORY="fluidbackend"
-  - git clone https://github.com/FluidTYPO3/TYPO3-Travis-Integration.git build-environment
-  - source build-environment/install-utilities.sh
-  - source build-environment/install-preserve-repository.sh
+  - cd ..
+  - git clone --single-branch --branch $INTEGRATION --depth 1 git://github.com/typo3-ci/TYPO3-Travis-Integration.git build-environment
+  - git clone --depth 1 git://github.com/FluidTYPO3/FluidTYPO3-CodingStandards.git build-environment/FluidTYPO3-CodingStandards
+  - git clone git://github.com/squizlabs/PHP_CodeSniffer.git build-environment/CodeSniffer
   - source build-environment/install-helper.sh
 
 script:
 # initial, quick inspection
-  - php build-environment/FluidTYPO3-CodingStandards/commit_message_inspector.php $PWD/build-environment/repository
+  - php build-environment/FluidTYPO3-CodingStandards/commit_message_inspector.php $PWD/fluidbackend
 # phplint checking on all PHP source files in extension
-  - find $PWD/build-environment/repository -name *.php -exec phpLint {} --fails-on-warning --report-unused \;
+  - find $PWD/fluidbackend -name *.php -exec phpLint {} --fails-on-warning --report-unused \;
 # PHPCodeSniffer code inspection with only errors displayed (no warnings)
-  - $PWD/build-environment/CodeSniffer/scripts/phpcs -n --standard=$PWD/build-environment/FluidTYPO3-CodingStandards/ruleset.xml $PWD/build-environment/repository
+  - build-environment/CodeSniffer/scripts/phpcs -n --standard=$PWD/build-environment/FluidTYPO3-CodingStandards/ruleset.xml $PWD/fluidbackend
