@@ -3,15 +3,7 @@ Fluidbackend: Flux Backend Modules
 
 > **Fluid Backend** is an API for using Flux forms as backend modules which can save data to a multitude of targets and target types.
 
-[![Build Status](https://travis-ci.org/FluidTYPO3/fluidbackend.png?branch=master)](https://travis-ci.org/FluidTYPO3/fluidbackend)
-
-## Code Quality
-
-![Abstraction Instability Chart](Documentation/ComplexityChart.png)
-![Inheritance and dependency risk](Documentation/PyramidChart.png)
-
-_Understanding the [Abstraction Instability Chart](http://pdepend.org/documentation/handbook/reports/abstraction-instability-chart.html)
-and [Pyramid Chart](http://pdepend.org/documentation/handbook/reports/overview-pyramid.html)._
+[![Build Status](https://img.shields.io/jenkins/s/https/jenkins.fluidtypo3.org/fluidbackend.svg?style=flat-square)](https://jenkins.fluidtypo3.org/job/fluidbackend/) [![Coverage Status](https://img.shields.io/coveralls/FluidTYPO3/fluidbackend/development.svg?style=flat-square)](https://coveralls.io/r/FluidTYPO3/fluidbackend)
 
 ## What does it do?
 
