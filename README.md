@@ -275,10 +275,3 @@ unless you take measures to protect the file, in which case PHP would probably m
   EXT:extkey/Resources/Private/Language/locallang_module_GROUPNAME.xml
 * If you don't configure an Outlet for the data then nothing will happen when saving the form (except for updating config storage)
 * If you require a custom controller to be called, use the `ControllerOutlet` and set the parameters identifying your controller.
-
-## References
-
-Other extensions which are either dependencies of or closely related to this extension:
-
-* https://github.com/FluidTYPO3/flux is a dependency and is used to configure how the content template variable are defined.
-* https://github.com/FluidTYPO3/vhs is a highly suggested companion for Fluid Content templates, providing useful ViewHelpers.
