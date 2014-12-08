@@ -55,7 +55,6 @@ class ConfigurationService extends FluxService implements SingletonInterface {
 		foreach ($extensionKeys as $extensionKey) {
 			$pluginSignature = str_replace('_', '', $extensionKey);
 			if (TRUE === isset($typoScript['plugin.']['tx_' . $pluginSignature . '.']['view.'])) {
-
 				$paths[$extensionKey] = $typoScript['plugin.']['tx_' . $pluginSignature . '.']['view.'];
 			}
 		}

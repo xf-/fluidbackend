@@ -21,7 +21,7 @@
             }
         }
     ],
-    "autoload": {
+    "autoload-dev": {
         "psr-4": {
             "FluidTYPO3\\Fluidbackend\\Tests\\": "Tests/",
             "FluidTYPO3\\Fluidbackend\\": "Classes/"
