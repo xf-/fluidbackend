@@ -9,9 +9,14 @@ namespace FluidTYPO3\Fluidbackend\Service;
  */
 
 use FluidTYPO3\Flux\Core;
+use FluidTYPO3\Flux\Form;
 use FluidTYPO3\Flux\Service\FluxService;
+use FluidTYPO3\Flux\Utility\ExtensionNamingUtility;
+use FluidTYPO3\Flux\Utility\MiscellaneousUtility;
 use FluidTYPO3\Flux\Utility\ResolveUtility;
 use FluidTYPO3\Flux\Utility\PathUtility;
+use FluidTYPO3\Flux\View\TemplatePaths;
+use FluidTYPO3\Flux\View\ViewContext;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
@@ -34,56 +39,52 @@ class ConfigurationService extends FluxService implements SingletonInterface {
 	 * @return array
 	 */
 	public function getBackendModuleTemplatePaths($extensionName = NULL) {
-		$typoScript = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
 		$paths = array();
 		$extensionKeys = Core::getRegisteredProviderExtensionKeys('Backend');
 		foreach ($extensionKeys as $extensionKey) {
-			$pluginSignature = str_replace('_', '', $extensionKey);
-			if (TRUE === isset($typoScript['plugin.']['tx_' . $pluginSignature . '.']['view.'])) {
-				$paths[$extensionKey] = $typoScript['plugin.']['tx_' . $pluginSignature . '.']['view.'];
-			}
+			$paths[$extensionKey] = $this->getViewConfigurationForExtensionName($extensionKey);
 		}
 		return $paths;
 	}
 
 	/**
-	 * @param string $extensionKey
-	 * @param array $fluxConfiguration
+	 * @param string $qualifiedExtensionName
+	 * @param Form $form
 	 * @return void
 	 * @throws \Exception
 	 */
-	public function registerModuleBasedOnFluxForm($extensionKey, array $fluxConfiguration) {
+	public function registerModuleBasedOnFluxForm($qualifiedExtensionName, Form $form) {
+		$extensionKey = ExtensionNamingUtility::getExtensionKey($qualifiedExtensionName);
+		$signature = ExtensionNamingUtility::getExtensionSignature($qualifiedExtensionName);
+		$options = $form->getOption('fluidbackend');
+		$formId = $form->getName();
 		$module = 'web';
-		if (TRUE === isset($fluxConfiguration['moduleGroup'])) {
-			$module = $fluxConfiguration['moduleGroup'];
+		if (TRUE === isset($options['moduleGroup'])) {
+			$module = $options['moduleGroup'];
 		}
 		$position = 'before:help';
-		if (TRUE === isset($fluxConfiguration['modulePosition'])) {
-			$position = $fluxConfiguration['modulePosition'];
+		if (TRUE === isset($options['modulePosition'])) {
+			$position = $options['modulePosition'];
 		}
 		$navigationComponent = '';
-		if (TRUE === isset($fluxConfiguration['modulePageTree']) && TRUE === (boolean) $fluxConfiguration['modulePageTree']) {
+		if (TRUE === isset($options['modulePageTree']) && TRUE === (boolean) $options['modulePageTree']) {
 			$navigationComponent = 'typo3-pagetree';
 		}
-		$extensionKey = GeneralUtility::camelCaseToLowerCaseUnderscored($extensionKey);
-		$extensionKey = strtolower($extensionKey);
-		$icon = 'EXT:' . $extensionKey . '/ext_icon.gif';
-		if ($fluxConfiguration['icon']) {
-			$icon = $fluxConfiguration['icon'];
+		if (TRUE === empty($icon)) {
+			$icon = 'EXT:' . $extensionKey . '/ext_icon.gif';
 		}
-		if (NULL === ResolveUtility::resolveFluxControllerClassNameByExtensionKeyAndAction($extensionKey, 'render', 'Backend')) {
+		if (NULL === ResolveUtility::resolveFluxControllerClassNameByExtensionKeyAndAction($qualifiedExtensionName, 'render', 'Backend')) {
 			throw new \Exception('Attempt to register a Backend controller without an associated BackendController. Extension key: ' . $extensionKey, 1368826271);
 		}
-		$signature = str_replace('_', '', $extensionKey);
 		$moduleConfiguration = array(
 			'access' => 'user,group',
 			'icon'   => $icon,
-			'labels' => 'LLL:EXT:' . $extensionKey . '/Resources/Private/Language/locallang_module_' . $fluxConfiguration['id'] . '.xml'
+			'labels' => 'LLL:EXT:' . $extensionKey . '/Resources/Private/Language/locallang_module_' . $formId . '.xml'
 		);
 		if (FALSE === empty($navigationComponent)) {
 			$moduleConfiguration['navigationComponentId'] = $navigationComponent;
 		}
-		$moduleSignature = 'tx_' . $signature . '_' . $fluxConfiguration['id'];
+		$moduleSignature = 'tx_' . $signature . '_' . ucfirst($formId);
 		if (FALSE === isset($GLOBALS['TBE_MODULES'][$module])) {
 			if (FALSE === strpos($position, ':')) {
 				if ('top' === $position) {
@@ -110,11 +111,21 @@ class ConfigurationService extends FluxService implements SingletonInterface {
 				}
 			}
 			$GLOBALS['TBE_MODULES'] = $temp_TBE_MODULES;
-			$moduleConfiguration['labels'] = 'LLL:EXT:' . $extensionKey . '/Resources/Private/Language/locallang_module_' . $module . '.xml';
-            ExtensionUtility::registerModule($extensionKey, $module, '', $position, array('Backend' => 'render,save'), $moduleConfiguration);
+			// register pseudo-module acting as group header
+			$moduleConfiguration['labels'] = 'LLL:EXT:' . $extensionKey . '/Resources/Private/Language/locallang_modulegroup.xml';
+            ExtensionUtility::registerModule(
+				$qualifiedExtensionName,
+				$module,
+				'',
+				$position,
+				array('Backend' => 'render,save'),
+				$moduleConfiguration
+			);
 		}
+		// register individual module in group
+		$moduleConfiguration['labels'] = 'LLL:EXT:' . $extensionKey . '/Resources/Private/Language/locallang_module_' . $formId . '.xml';
         ExtensionUtility::registerModule(
-			$extensionKey,
+			$qualifiedExtensionName,
 			$module,
 			$moduleSignature,
 			$position,
@@ -131,17 +142,16 @@ class ConfigurationService extends FluxService implements SingletonInterface {
 	public function detectAndRegisterAllFluidBackendModules() {
 		$configurations = $this->getBackendModuleTemplatePaths();
 		foreach ($configurations as $extensionKey => $paths) {
-			$extensionName = GeneralUtility::underscoredToUpperCamelCase($extensionKey);
-			$paths = PathUtility::translatePath($paths);
-			$directoryPath = $paths['templateRootPath'] . '/Backend/';
-			$files = GeneralUtility::getFilesInDir($directoryPath, 'html');
+			$paths = new TemplatePaths($paths);
+			$context = new ViewContext(NULL, $extensionKey, 'Backend');
+			$context->setSectionName('Configuration');
+			$context->setTemplatePaths($paths);
+			$files = $paths->resolveAvailableTemplateFiles('Backend');
 			foreach ($files as $fileName) {
 				$templatePathAndFilename = $directoryPath . $fileName;
-				$storedConfiguration = $this->getFlexFormConfigurationFromFile($templatePathAndFilename, array(), 'Configuration', $paths, $extensionName);
-				if (FALSE === (boolean) $storedConfiguration['enabled']) {
-					continue;
-				}
-				$this->registerModuleBasedOnFluxForm($extensionKey, $storedConfiguration);
+				$context->setTemplatePathAndFilename($templatePathAndFilename);
+				$form = $this->getFormFromTemplateFile($context);
+				$this->registerModuleBasedOnFluxForm($extensionKey, $form);
 			}
 		}
 	}

@@ -5,20 +5,13 @@
         "fluidtypo3/flux": "*"
     },
     "require-dev": {
-        "typo3/cms": "6.2.7",
-        "fluidtypo3/development": "*"
+        "fluidtypo3/development": "*",
+        "fluidtypo3/flux": "dev-development"
     },
     "repositories": [
         {
-            "type": "package",
-            "package": {
-                "name": "typo3/cms",
-                "version": "6.2.7",
-                "dist": {
-                    "url": "https://github.com/TYPO3/TYPO3.CMS/archive/6.2.7.zip",
-                    "type": "zip"
-                }
-            }
+            "type": "vcs",
+            "url": "https://github.com/TYPO3/TYPO3.CMS"
         }
     ],
     "autoload": {

@@ -11,6 +11,7 @@ namespace FluidTYPO3\Fluidbackend\Provider\Configuration;
 use FluidTYPO3\Flux\Provider\ProviderInterface;
 use FluidTYPO3\Flux\Provider\AbstractProvider;
 use FluidTYPO3\Flux\Utility\PathUtility;
+use FluidTYPO3\Flux\View\TemplatePaths;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -20,9 +21,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * @package Fluidbackend
  * @subpackage Provider\Configuration
  */
-class StorageConfigurationProvider
-	extends AbstractProvider
-	implements ProviderInterface {
+class StorageConfigurationProvider extends AbstractProvider implements ProviderInterface {
 
 	/**
 	 * @var string
@@ -87,8 +86,7 @@ class StorageConfigurationProvider
 	 */
 	public function getTemplatePaths(array $row) {
 		$extensionKey = $this->getExtensionKey($row);
-		$paths = $this->configurationService->getTypoScriptSubConfiguration(NULL, 'view', $extensionKey);
-		$paths = PathUtility::translatePath($paths);
+		$paths = $this->configurationService->getViewConfigurationForExtensionName($extensionKey);
 		return $paths;
 	}
 
@@ -99,23 +97,8 @@ class StorageConfigurationProvider
 	public function getTemplatePathAndFilename(array $row) {
 		$action = $this->getControllerActionFromRecord($row);
 		$paths = $this->getTemplatePaths($row);
-		$templatePathAndFilename = $paths['templateRootPath'] . '/Backend/' . ucfirst($action) . '.html';
-		return $templatePathAndFilename;
-	}
-
-	/**
-	 * @param array $row
-	 * @return array
-	 */
-	public function getFlexFormValues(array $row) {
-		$extensionKey = $this->getExtensionKey($row);
-		$extensionName = GeneralUtility::underscoredToUpperCamelCase($extensionKey);
-		$paths = $this->getTemplatePaths($row);
-		$values = array();
-		$section = $this->getConfigurationSectionName($row);
-		$templatePathAndFilename = $this->getTemplatePathAndFilename($row);
-		$configuration = $this->configurationService->getFlexFormConfigurationFromFile($templatePathAndFilename, $values, $section, $paths, $extensionName);
-		return $configuration;
+		$templatePaths = new TemplatePaths($paths);
+		return $templatePaths->resolveTemplateFileForControllerAndActionAndFormat('Backend', ucfirst($action));
 	}
 
 }

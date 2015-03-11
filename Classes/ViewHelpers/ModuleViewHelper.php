@@ -35,11 +35,12 @@ class ModuleViewHelper extends AbstractformViewHelper {
 	 * @return void
 	 */
 	public function render() {
-		$storage = $this->getStorage();
+		$form = $this->getForm();
+		$storage = (array) $form->getOption('fluidbackend');
 		$storage['moduleGroup'] = $this->arguments['group'];
 		$storage['modulePosition'] = $this->arguments['position'];
 		$storage['modulePageTree'] = (boolean) $this->arguments['navigation'];
-		$this->setStorage($storage);
+		$form->setOption('fluidbackend', $storage);
 	}
 
 }

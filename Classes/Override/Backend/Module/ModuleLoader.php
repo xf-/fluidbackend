@@ -25,14 +25,14 @@ class ModuleLoader extends \TYPO3\CMS\Backend\Module\ModuleLoader {
 	 * @param array $modulesArray
 	 * @param string $BE_USER
 	 */
-	public function load($modulesArray, $BE_USER = '') {
+	public function load($modulesArray, $BE_USER = NULL) {
 		/** @var $objectManager \TYPO3\CMS\Extbase\Object\ObjectManager */
 		$objectManager = GeneralUtility::makeInstance('TYPO3\CMS\Extbase\Object\ObjectManager');
 		/** @var $configurationService \FluidTYPO3\Fluidbackend\Service\ConfigurationService */
 		$configurationService = $objectManager->get('FluidTYPO3\Fluidbackend\Service\ConfigurationService');
 		$configurationService->detectAndRegisterAllFluidBackendModules();
 		$modulesArray = $GLOBALS['TBE_MODULES'];
-		parent::load($modulesArray, $BE_USER);
+		parent::load($modulesArray, NULL === $BE_USER ? $GLOBALS['BE_USER'] : $BE_USER);
 	}
 
 }
