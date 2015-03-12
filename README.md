@@ -7,24 +7,6 @@ Fluidbackend: Flux Backend Modules
 
 > Fluidbackend uses Flux forms as backend modules which can save data to a multitude of targets and target types.
 
-Concept
--------
-
-Fluidbackend takes a Flux-enriched Fluid template similar to those used by other Flux features like Fluidcontent and Fluidpages,
-and turns the Flux Form definition inside that template into a full-fledged backend module. And like Fluidcontent and Fluidpages,
-Fluidbackend also requires that you ship your templates inside a so-called Provider Extension.
-
-Fluidbackend requires a controller class - your module still has to be registered in TYPO3 as a proper backend module, but rather
-than requiring you to enter all the configuration those modules need (a lot of boilerplate code), Fluidbackend uses Flux to read
-the instructions for how to register the template as a backend module. You define these options inside the template and just like
-with Fluidcontent and Fluidpages, an integrator can later replace these templates, add additional fields, data processing etc.
-
-Fluidbackend was created to *fit the 80% of use cases* intentionally, to keep the complexity low. As such, it is not a replacement
-for advanced backend modules - it is merely a way to very quickly create a module based on a form which saves/processes data.
-
-Example
--------
-
 These three pieces of code together make a new backend module through Fluidbackend:
 
 ```php
@@ -66,6 +48,21 @@ class BackendController extends AbstractBackendController {
     <!-- ...or after it, here's the place to put it -->
 </f:section>
 ```
+
+Concept
+-------
+
+Fluidbackend takes a Flux-enriched Fluid template similar to those used by other Flux features like Fluidcontent and Fluidpages,
+and turns the Flux Form definition inside that template into a full-fledged backend module. And like Fluidcontent and Fluidpages,
+Fluidbackend also requires that you ship your templates inside a so-called Provider Extension.
+
+Fluidbackend requires a controller class - your module still has to be registered in TYPO3 as a proper backend module, but rather
+than requiring you to enter all the configuration those modules need (a lot of boilerplate code), Fluidbackend uses Flux to read
+the instructions for how to register the template as a backend module. You define these options inside the template and just like
+with Fluidcontent and Fluidpages, an integrator can later replace these templates, add additional fields, data processing etc.
+
+Fluidbackend was created to *fit the 80% of use cases* intentionally, to keep the complexity low. As such, it is not a replacement
+for advanced backend modules - it is merely a way to very quickly create a module based on a form which saves/processes data.
 
 How does it work
 ----------------
