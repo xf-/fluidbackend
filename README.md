@@ -27,11 +27,11 @@ How does it work
 
 The developer flow of Fluidbackend is as follows:
 
-1. The developer registers the Provider Extension with Flux, with the controller name `Backend`.
-2. The developer creates a Flux form in the template, defines `Pipes` that process data and options that control integration.
-3. Fluidbackend hooks into TYPO3 backend rendering, processing all `Backend` Provider Extensions.
+1. Developer registers Provider Extension with Flux, with controller name `Backend`.
+2. Developer creates form in template with module options and `Pipes` that process data.
+3. Fluidbackend hooks into TYPO3 backend rendering, processing `Backend` Provider Extensions.
 4. The Flux Form instance from each template is retrieved.
-5. The options defined in this Form instance are used to give the module its icon, placement, group etc.
+5. The options defined in this Form are used to give the module icon, placement, group etc.
 6. The module is added to the list of available TYPO3 backend modules.
 7. Steps 3-5 is repeated with every template file that contain a valid and enabled Form definition.
 
