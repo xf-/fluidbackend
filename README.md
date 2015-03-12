@@ -22,6 +22,51 @@ with Fluidcontent and Fluidpages, an integrator can later replace these template
 Fluidbackend was created to *fit the 80% of use cases* intentionally, to keep the complexity low. As such, it is not a replacement
 for advanced backend modules - it is merely a way to very quickly create a module based on a form which saves/processes data.
 
+Example
+-------
+
+These three pieces of code together make a new backend module through Fluidbackend:
+
+```php
+// ext_tables.php
+\FluidTYPO3\Flux\Core::registerProviderExtensionKey('MyVendor.Myextension', 'Backend');
+```
+
+```php
+// Classes/Controller/BackendController
+namespace MyVendor\Myextension\Controller;
+use FluidTYPO3\Fluidbackend\Controller\AbstractBackendController;
+class BackendController extends AbstractBackendController {
+
+}
+```
+
+```xml
+<!-- Resources/Private/Templates/Backend/Example.html -->
+{namespace flux=FluidTYPO3\Flux\ViewHelpers}
+<f:layout name="Backend" />
+<f:section name="Configuration">
+    <flux:form id="mymodule">
+        <!-- The options that govern integration -->
+        <flux:form.option name="Fluidbackend" value="{
+            moduleGroup: 'mygroupnameorexistinggroup',
+            modulePosition: 'after:web',
+            modulePageTree: 1}" />
+        
+        <!-- The fields that the form will contain -->
+        <flux:field.input name="inputfield" />
+        
+        <!-- The pipe(s) which will process the data -->
+        <flux:pipe.flashMessage title="Win!" message="You win!" />
+    </flux:form>
+</f:section>
+<f:section name="Main">
+	<!-- If you want some content before the form... -->
+    <flux:form.render form="{form}" />
+    <!-- ...or after it, here's the place to put it -->
+</f:section>
+```
+
 How does it work
 ----------------
 
