@@ -10,8 +10,11 @@ namespace FluidTYPO3\Fluidbackend\Provider\Configuration;
 
 use FluidTYPO3\Flux\Provider\ProviderInterface;
 use FluidTYPO3\Flux\Provider\AbstractProvider;
+use FluidTYPO3\Flux\Utility\ExtensionNamingUtility;
 use FluidTYPO3\Flux\Utility\PathUtility;
 use FluidTYPO3\Flux\View\TemplatePaths;
+use FluidTYPO3\Flux\View\ViewContext;
+use TYPO3\CMS\Backend\Form\FormEngine;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -99,6 +102,18 @@ class StorageConfigurationProvider extends AbstractProvider implements ProviderI
 		$paths = $this->getTemplatePaths($row);
 		$templatePaths = new TemplatePaths($paths);
 		return $templatePaths->resolveTemplateFileForControllerAndActionAndFormat('Backend', ucfirst($action));
+	}
+
+	/**
+	 * @param array $row
+	 * @return array
+	 */
+	public function getFlexFormValues(array $row) {
+		return array(
+			'record' => $row,
+			'fluxRecordField' => $this->getFieldName($row),
+			'fluxTableName' => $this->getTableName($row)
+		);
 	}
 
 }

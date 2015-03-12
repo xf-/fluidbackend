@@ -10,10 +10,8 @@ namespace FluidTYPO3\Fluidbackend\Controller;
 
 use FluidTYPO3\Fluidbackend\Domain\Repository\ConfigurationRepository;
 use FluidTYPO3\Fluidbackend\Domain\Model\Configuration;
-use FluidTYPO3\Fluidbackend\Outlet\OutletInterface;
-use FluidTYPO3\Fluidbackend\Service\OutletService;
 use FluidTYPO3\Flux\Controller\AbstractFluxController;
-
+use FluidTYPO3\Flux\Outlet\OutletInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 
@@ -34,11 +32,6 @@ class AbstractBackendController extends AbstractFluxController {
 	 * @var ConfigurationRepository
 	 */
 	protected $configurationRepository;
-
-	/**
-	 * @var OutletService
-	 */
-	protected $outletService;
 
 	/**
 	 * @var Configuration
@@ -69,19 +62,10 @@ class AbstractBackendController extends AbstractFluxController {
 	}
 
 	/**
-	 * @param OutletService $outletService
-	 * @return void
-	 */
-	public function injectOutletService(OutletService $outletService) {
-		$this->outletService = $outletService;
-	}
-
-	/**
 	 * @param ViewInterface $view
 	 * @return void
 	 */
 	public function initializeView(ViewInterface $view) {
-
 		parent::initializeView($view);
 		$name = $this->getCurrentConfigurationName();
 		$pageUid = $this->getCurrentPageUid();
@@ -92,24 +76,14 @@ class AbstractBackendController extends AbstractFluxController {
 		$this->formHandler->enableTabMenu = TRUE;
 		$this->view->assign('formHandler', $this->formHandler);
 		$this->view->assign('configurationName', $name);
+		$this->view->setControllerContext($this->controllerContext);
 	}
 
 	/**
-	 * @return array
+	 * @return OutletInterface
 	 */
-	protected function getCurrentOutlets() {
-		$moduleData = $this->getData();
-		if (TRUE === isset($moduleData['outlets'])) {
-			$outlets = $moduleData['outlets'];
-		} else {
-			/** @var $outlet \FluidTYPO3\Fluidbackend\Outlet\FlashMessageOutlet */
-			$outlet = $this->objectManager->get('FluidTYPO3\Fluidbackend\Outlet\FlashMessageOutlet');
-			$outlet->setName('default');
-			$outlet->setLabel('No Outlets defined');
-			$outlets = array($outlet);
-
-		}
-		return $outlets;
+	protected function getCurrentOutlet() {
+		return $this->provider->getForm($this->getRecord())->getOutlet();
 	}
 
 	/**
@@ -259,23 +233,22 @@ class AbstractBackendController extends AbstractFluxController {
 	 * @return void
 	 */
 	final public function saveAction(array $settings, $configurationName) {
-		$outlets = $this->getCurrentOutlets();
-		$settings = $this->outletService->trimLanguageWrappersFromPostedData($settings[$this->fluxTableName]);
+		$settings = $this->trimLanguageWrappersFromPostedData($settings);
+		$outlet = $this->getCurrentOutlet();
 		$settings = $this->beforeSave($settings);
-		$uid = key($settings);
-		$settings = $settings[$uid][$this->fluxRecordField]['data'];
-		foreach ($outlets as $outlet) {
-			try {
-				$localSettings = $settings;
-				if (TRUE === $outlet->assertDeepenSettings()) {
-					$localSettings = $this->deepenDottedArray($localSettings);
-				}
-				$localSettings = $this->beforeOutlet($outlet, $localSettings);
-				$this->outletService->produce($outlet, $localSettings);
-				$this->afterOutlet($outlet, $localSettings);
-			} catch (\Exception $outletError) {
-				$this->onOutletError($outlet, $localSettings, $outletError);
-			}
+		$table = $this->getFluxTableName();
+		$field = $this->getFluxRecordField();
+		$uid = key($settings[$table]);
+		$settings = $settings[$table][$uid][$field]['data'];
+		try {
+			$localSettings = $settings;
+			$localSettings = $this->deepenDottedArray($localSettings);
+			$localSettings = $this->beforeOutlet($outlet, $localSettings);
+			$outlet->fill($localSettings);
+			$outlet->produce();
+			$this->afterOutlet($outlet, $localSettings);
+		} catch (\Exception $outletError) {
+			$this->onOutletError($outlet, $localSettings, $outletError);
 		}
 		$settings = $this->afterSave($settings);
 		$this->updateConfigurationStorage($settings);
@@ -356,6 +329,24 @@ class AbstractBackendController extends AbstractFluxController {
 			}
 		}
 		return $array;
+	}
+
+	/**
+	 * @param mixed $post
+	 * @param integer $level
+	 * @return mixed
+	 */
+	public function trimLanguageWrappersFromPostedData($post, $level = 0) {
+		foreach ($post as $name => $value) {
+			if (($name === 'v' && $level === 0)) {
+				return $this->trimLanguageWrappersFromPostedData(array_pop($value), $level + 1);
+			} elseif ($name === 'vDEF' || $name === 'lDEF') {
+				return $this->trimLanguageWrappersFromPostedData($value, $level + 1);
+			} else {
+				$post[$name] = $this->trimLanguageWrappersFromPostedData($value, $level + 1);
+			}
+		}
+		return $post;
 	}
 
 }

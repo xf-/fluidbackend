@@ -36,9 +36,10 @@ class FormViewHelper extends FluidFormViewHelper {
 	}
 
 	/**
+	 * @param string $pluginName
 	 * @return string
 	 */
-	public function render() {
+	public function render($pluginName = NULL) {
 		$data = $this->templateVariableContainer->getAll();
 		$row = $data['record'];
 		$field = $data['fluxRecordField'];
