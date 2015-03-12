@@ -8,6 +8,7 @@ namespace FluidTYPO3\Fluidbackend\Service;
  * LICENSE.md file that was distributed with this source code.
  */
 
+use FluidTYPO3\Fluidbackend\Constants;
 use FluidTYPO3\Flux\Core;
 use FluidTYPO3\Flux\Form;
 use FluidTYPO3\Flux\Service\FluxService;
@@ -56,25 +57,29 @@ class ConfigurationService extends FluxService implements SingletonInterface {
 	public function registerModuleBasedOnFluxForm($qualifiedExtensionName, Form $form) {
 		$extensionKey = ExtensionNamingUtility::getExtensionKey($qualifiedExtensionName);
 		$signature = ExtensionNamingUtility::getExtensionSignature($qualifiedExtensionName);
-		$options = $form->getOption('fluidbackend');
+		$options = $form->getOption('Fluidbackend');
 		$formId = $form->getName();
 		$module = 'web';
-		if (TRUE === isset($options['moduleGroup'])) {
-			$module = $options['moduleGroup'];
+		if (TRUE === isset($options[Constants::FORM_OPTION_MODULE_GROUP])) {
+			$module = $options[Constants::FORM_OPTION_MODULE_GROUP];
 		}
 		$position = 'before:help';
-		if (TRUE === isset($options['modulePosition'])) {
-			$position = $options['modulePosition'];
+		if (TRUE === isset($options[Constants::FORM_OPTION_MODULE_POSITION])) {
+			$position = $options[Constants::FORM_OPTION_MODULE_POSITION];
 		}
 		$navigationComponent = '';
-		if (TRUE === isset($options['modulePageTree']) && TRUE === (boolean) $options['modulePageTree']) {
+		if (TRUE === isset($options[Constants::FORM_OPTION_MODULE_PAGE_TREE])
+			&& TRUE === (boolean) $options[Constants::FORM_OPTION_MODULE_PAGE_TREE]) {
 			$navigationComponent = 'typo3-pagetree';
 		}
+		$icon = MiscellaneousUtility::getIconForTemplate($form);
 		if (TRUE === empty($icon)) {
 			$icon = 'EXT:' . $extensionKey . '/ext_icon.gif';
 		}
 		if (NULL === ResolveUtility::resolveFluxControllerClassNameByExtensionKeyAndAction($qualifiedExtensionName, 'render', 'Backend')) {
-			throw new \Exception('Attempt to register a Backend controller without an associated BackendController. Extension key: ' . $extensionKey, 1368826271);
+			throw new \RuntimeException(
+				'Attempt to register a Backend controller without an associated BackendController. Extension key: ' . $extensionKey,
+				1368826271);
 		}
 		$moduleConfiguration = array(
 			'access' => 'user,group',

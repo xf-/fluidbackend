@@ -18,7 +18,6 @@ class ModuleRunner extends \TYPO3\CMS\Extbase\Core\ModuleRunner {
 		/** @var $configurationService \FluidTYPO3\Fluidbackend\Service\ConfigurationService */
 		$configurationService = $objectManager->get('FluidTYPO3\Fluidbackend\Service\ConfigurationService');
 		$configurationService->detectAndRegisterAllFluidBackendModules();
-		$GLOBALS['SOBE']->doc = new DocumentTemplate();
 		return parent::callModule($moduleSignature);
 	}
 
