@@ -5,7 +5,6 @@ if (!defined ('TYPO3_MODE')) {
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 FluidTYPO3\Flux\Core::registerConfigurationProvider('FluidTYPO3\Fluidbackend\Provider\Configuration\StorageConfigurationProvider');
-ExtensionManagementUtility::addStaticFile($_EXTKEY, 'Configuration/TypoScript', 'Fluid Backend: Configuration');
 array_unshift($GLOBALS['TBE_MODULES']['_dispatcher'], 'FluidTYPO3\\Fluidbackend\\Override\\Backend\\Module\\ModuleRunner');
 
 ExtensionManagementUtility::allowTableOnStandardPages('tx_fluidbackend_domain_model_configuration');
