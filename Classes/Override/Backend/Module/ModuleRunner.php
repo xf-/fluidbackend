@@ -18,6 +18,15 @@ class ModuleRunner extends \TYPO3\CMS\Extbase\Core\ModuleRunner {
 		/** @var $configurationService \FluidTYPO3\Fluidbackend\Service\ConfigurationService */
 		$configurationService = $objectManager->get('FluidTYPO3\Fluidbackend\Service\ConfigurationService');
 		$configurationService->detectAndRegisterAllFluidBackendModules();
+		return $this->performModuleCall($moduleSignature);
+	}
+
+	/**
+	 * @codeCoverageIgnore
+	 * @param string $moduleSignature
+	 * @return boolean
+	 */
+	public function performModuleCall($moduleSignature) {
 		return parent::callModule($moduleSignature);
 	}
 

@@ -8,6 +8,8 @@ namespace FluidTYPO3\Fluidbackend\Test\Unit\Provider\Configuration;
  * LICENSE.md file that was distributed with this source code.
  */
 
+use FluidTYPO3\Fluidbackend\Provider\Configuration\StorageConfigurationProvider;
+use FluidTYPO3\Flux\Service\FluxService;
 use TYPO3\CMS\Core\Tests\UnitTestCase;
 
 /**
@@ -41,6 +43,40 @@ class StorageConfigurationProviderTest extends UnitTestCase {
 			array(array(), 'test2', 'test2'),
 			array(array('name' => 'void-void-test2'), NULL, 'test2')
 		);
+	}
+
+	/**
+	 * @dataProvider getTemplatePathAndFilenameTestValues
+	 * @param array $record
+	 * @param string $expected
+	 */
+	public function testGetTemplatePathAndFilename(array $record, $expected) {
+		$service = $this->getMock('FluidTYPO3\\Flux\\Service\\FluxService', array('getViewConfigurationForExtensionName'));
+		$service->expects($this->once())->method('getViewConfigurationForExtensionName')->with($expected);
+		$instance = new StorageConfigurationProvider();
+		$instance->injectConfigurationService($service);
+		$result = $instance->getTemplatePathAndFilename($record);
+		$this->assertNull($result);
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getTemplatePathAndFilenameTestValues() {
+		return array(
+			array(array(), ''),
+			array(array('name' => 'foo-bar'), 'foo'),
+			array(array('name' => 'Foo-Bar'), 'foo'),
+		);
+	}
+
+	/**
+	 * @return void
+	 */
+	public function testGetFlexFormValues() {
+		$instance = new StorageConfigurationProvider();
+		$result = $instance->getFlexFormValues(array());
+		$this->assertArrayHasKey('record', $result);
 	}
 
 }

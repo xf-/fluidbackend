@@ -76,11 +76,10 @@ class StorageConfigurationProvider extends AbstractProvider implements ProviderI
 	public function getExtensionKey(array $row) {
 		if (TRUE === isset($row['name'])) {
 			list ($extensionName, , ) = explode('-', $row['name']);
-			$extensionKey = GeneralUtility::camelCaseToLowerCaseUnderscored($extensionName);
 		} else {
-			list ($extensionKey, ) = $this->getExtensionKeyAndActionFromUrl();
+			list ($extensionName, ) = $this->getExtensionKeyAndActionFromUrl();
 		}
-		return $extensionKey;
+		return ExtensionNamingUtility::getExtensionKey($extensionName);
 	}
 
 	/**

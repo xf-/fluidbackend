@@ -6,22 +6,15 @@ if (!file_exists(__DIR__ . '/../vendor/autoload.php')) {
 	);
 }
 
-require_once __DIR__ . '/../vendor/autoload.php';
+/** @var Composer\Autoload\ClassLoader $autoloader */
+$autoloader = require __DIR__ . '/../vendor/autoload.php';
+$autoloader->addPsr4('FluidTYPO3\\Fluidbackend\\Tests\\Unit\\', __DIR__ . '/Unit/');
+$autoloader->addPsr4('FluidTYPO3\\Flux\\Tests\\Fixtures\\', __DIR__ . '/../vendor/fluidtypo3/flux/Tests/Fixtures/');
+$autoloader->addPsr4('FluidTYPO3\\Flux\\Tests\\Unit\\', __DIR__ . '/../vendor/fluidtypo3/flux/Tests/Unit/');
+$autoloader->addPsr4('TYPO3\\CMS\\Extbase\\', __DIR__ . '/../vendor/typo3/cms/typo3/sysext/extbase/Classes/');
 
-define('PATH_thisScript', realpath('vendor/typo3/cms/typo3/index.php'));
-define('TYPO3_MODE', 'BE');
-putenv('TYPO3_CONTEXT=Testing');
-
-$nullCache = array(
-	'frontend' => 'TYPO3\\CMS\\Core\\Cache\\Frontend\\VariableFrontend',
-	'backend' => 'TYPO3\\CMS\\Core\\Cache\\Backend\\NullBackend'
-);
-$GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'] = array(
-	'extbase_object' => $nullCache,
-	'extbase_reflection' => $nullCache
-);
-
-\TYPO3\CMS\Core\Core\Bootstrap::getInstance()
-	->baseSetup('typo3/')
-	->initializeClassLoader()
-	->initializeCachingFramework();
+\FluidTYPO3\Development\Bootstrap::initialize(array(
+	'cache_core' => \FluidTYPO3\Development\Bootstrap::CACHE_PHP_NULL,
+	'fluid_template' => \FluidTYPO3\Development\Bootstrap::CACHE_PHP_NULL,
+	'extbase_object' => \FluidTYPO3\Development\Bootstrap::CACHE_NULL,
+));

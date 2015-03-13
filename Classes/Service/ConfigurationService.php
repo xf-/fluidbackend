@@ -36,23 +36,26 @@ use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 class ConfigurationService extends FluxService implements SingletonInterface {
 
 	/**
+	 * @return array
+	 */
+	protected function getRegisteredProviderExtensionKeys() {
+		return Core::getRegisteredProviderExtensionKeys('Backend');
+	}
+
+	/**
 	 * @param string $extensionName
 	 * @return array
 	 */
 	public function getBackendModuleTemplatePaths($extensionName = NULL) {
-		$paths = array();
-		$extensionKeys = Core::getRegisteredProviderExtensionKeys('Backend');
-		foreach ($extensionKeys as $extensionKey) {
-			$paths[$extensionKey] = $this->getViewConfigurationForExtensionName($extensionKey);
-		}
-		return $paths;
+		$extensionKeys = $this->getRegisteredProviderExtensionKeys();
+		return array_map(array($this, 'getViewConfigurationForExtensionName'), array_combine($extensionKeys, $extensionKeys));
 	}
 
 	/**
 	 * @param string $qualifiedExtensionName
 	 * @param Form $form
 	 * @return void
-	 * @throws \Exception
+	 * @throws \RuntimeException
 	 */
 	public function registerModuleBasedOnFluxForm($qualifiedExtensionName, Form $form) {
 		$extensionKey = ExtensionNamingUtility::getExtensionKey($qualifiedExtensionName);
@@ -96,7 +99,7 @@ class ConfigurationService extends FluxService implements SingletonInterface {
 					$temp_TBE_MODULES = array($module => '');
 					$temp_TBE_MODULES = GeneralUtility::array_merge_recursive_overrule($temp_TBE_MODULES, $GLOBALS['TBE_MODULES']);
 				} else {
-					$temp_TBE_MODULES = $GLOBALS['TBE_MODULES'];
+					$temp_TBE_MODULES = (array) $GLOBALS['TBE_MODULES'];
 					$temp_TBE_MODULES[$module] = '';
 				}
 			} else {
@@ -115,7 +118,7 @@ class ConfigurationService extends FluxService implements SingletonInterface {
 					}
 				}
 			}
-			$GLOBALS['TBE_MODULES'] = $temp_TBE_MODULES;
+			$GLOBALS['TBE_MODULES'] = (array) $temp_TBE_MODULES;
 			// register pseudo-module acting as group header
 			$moduleConfiguration['labels'] = 'LLL:EXT:' . $extensionKey . '/Resources/Private/Language/locallang_modulegroup.xml';
             ExtensionUtility::registerModule(
