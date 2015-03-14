@@ -79,7 +79,7 @@ class ConfigurationService extends FluxService implements SingletonInterface {
 		if (TRUE === empty($icon)) {
 			$icon = 'EXT:' . $extensionKey . '/ext_icon.gif';
 		}
-		if (NULL === ResolveUtility::resolveFluxControllerClassNameByExtensionKeyAndAction($qualifiedExtensionName, 'render', 'Backend')) {
+		if (NULL === $this->getResolver()->resolveFluxControllerClassNameByExtensionKeyAndAction($qualifiedExtensionName, 'render', 'Backend')) {
 			throw new \RuntimeException(
 				'Attempt to register a Backend controller without an associated BackendController. Extension key: ' . $extensionKey,
 				1368826271);
