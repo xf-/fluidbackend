@@ -19,18 +19,6 @@
             "FluidTYPO3\\Fluidbackend\\": "Classes/"
         }
     },
-    "autoload-dev": {
-        "psr-4": {
-            "FluidTYPO3\\Fluidbackend\\Tests\\": "Tests/"
-        },
-        "classmap": [
-            "vendor/typo3/cms/typo3/sysext/extbase",
-            "vendor/typo3/cms/typo3/sysext/fluid",
-            "vendor/typo3/cms/typo3/sysext/core",
-            "vendor/typo3/cms/typo3/sysext/backend",
-            "vendor/typo3/cms/typo3/sysext/frontend"
-        ]
-    },
     "version": "0.9.1",
     "type": "typo3-cms-extension"
 }

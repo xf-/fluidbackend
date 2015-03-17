@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FluidTYPO3/flux.git",
-                "reference": "a77e3de6ce62507b4fb71b9a6934553685827c23"
+                "reference": "d5e7a4764e566c5ee041e4420d7412af09d6af8b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FluidTYPO3/flux/zipball/a77e3de6ce62507b4fb71b9a6934553685827c23",
-                "reference": "a77e3de6ce62507b4fb71b9a6934553685827c23",
+                "url": "https://api.github.com/repos/FluidTYPO3/flux/zipball/d5e7a4764e566c5ee041e4420d7412af09d6af8b",
+                "reference": "d5e7a4764e566c5ee041e4420d7412af09d6af8b",
                 "shasum": ""
             },
             "require-dev": {
@@ -41,7 +41,7 @@
             ],
             "description": "The flux package from FluidTYPO3",
             "homepage": "http://fluidtypo3.org",
-            "time": "2015-03-14 18:55:33"
+            "time": "2015-03-17 00:05:54"
         }
     ],
     "packages-dev": [
@@ -120,16 +120,16 @@
         },
         {
             "name": "fluidtypo3/development",
-            "version": "1.1.11",
+            "version": "1.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FluidTYPO3/fluidtypo3-development.git",
-                "reference": "cd00d5894b1ddfddfef4b6e4b006ba4b7ce9317c"
+                "reference": "af535f10560f69c890e2ff23176541ae8c9877c5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FluidTYPO3/fluidtypo3-development/zipball/cd00d5894b1ddfddfef4b6e4b006ba4b7ce9317c",
-                "reference": "cd00d5894b1ddfddfef4b6e4b006ba4b7ce9317c",
+                "url": "https://api.github.com/repos/FluidTYPO3/fluidtypo3-development/zipball/af535f10560f69c890e2ff23176541ae8c9877c5",
+                "reference": "af535f10560f69c890e2ff23176541ae8c9877c5",
                 "shasum": ""
             },
             "require": {
@@ -139,7 +139,7 @@
                 "phpunit/phpunit": "4.3.*",
                 "satooshi/php-coveralls": "*",
                 "squizlabs/php_codesniffer": "*",
-                "typo3/cms": "6.2.*"
+                "typo3/cms": "*"
             },
             "replace": {
                 "typo3/cms-composer-installers": "*"
@@ -174,7 +174,7 @@
                 "php",
                 "typo3"
             ],
-            "time": "2015-03-06 03:18:16"
+            "time": "2015-03-17 00:19:57"
         },
         {
             "name": "guzzle/guzzle",
@@ -353,16 +353,16 @@
         },
         {
             "name": "namelesscoder/typo3-repository-client",
-            "version": "1.0.5",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/NamelessCoder/typo3-repository-client.git",
-                "reference": "f099dc8c6f5a0c899498d8f92a95e0808badb689"
+                "reference": "51e4b17dd685c30c0434493d70400b6bf9a19723"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/NamelessCoder/typo3-repository-client/zipball/f099dc8c6f5a0c899498d8f92a95e0808badb689",
-                "reference": "f099dc8c6f5a0c899498d8f92a95e0808badb689",
+                "url": "https://api.github.com/repos/NamelessCoder/typo3-repository-client/zipball/51e4b17dd685c30c0434493d70400b6bf9a19723",
+                "reference": "51e4b17dd685c30c0434493d70400b6bf9a19723",
                 "shasum": ""
             },
             "require-dev": {
@@ -392,7 +392,7 @@
                 }
             ],
             "description": "Client for interacting with the official TYPO3 Extension Repository (TER). Contains API and CLI scripts.",
-            "time": "2015-03-03 20:20:31"
+            "time": "2015-03-15 02:00:17"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -1573,16 +1573,16 @@
         },
         {
             "name": "typo3/cms",
-            "version": "6.2.10",
+            "version": "7.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/TYPO3/TYPO3.CMS.git",
-                "reference": "b3201dd1e9ffd33dbd55912626d6de248e8d5696"
+                "reference": "5fa3e3899f93a5fcc022ad2564c1f23855c81e5f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/TYPO3/TYPO3.CMS/zipball/b3201dd1e9ffd33dbd55912626d6de248e8d5696",
-                "reference": "b3201dd1e9ffd33dbd55912626d6de248e8d5696",
+                "url": "https://api.github.com/repos/TYPO3/TYPO3.CMS/zipball/5fa3e3899f93a5fcc022ad2564c1f23855c81e5f",
+                "reference": "5fa3e3899f93a5fcc022ad2564c1f23855c81e5f",
                 "shasum": ""
             },
             "require": {
@@ -1591,7 +1591,7 @@
                 "ext-session": "*",
                 "ext-xml": "*",
                 "helhum/class-alias-loader": "1.0.*@dev",
-                "php": ">=5.3.7",
+                "php": ">=5.5.0",
                 "typo3/cms-composer-installers": "1.1.*@dev"
             },
             "replace": {
@@ -1610,7 +1610,6 @@
                 "typo3/cms-documentation": "self.version",
                 "typo3/cms-extbase": "self.version",
                 "typo3/cms-extensionmanager": "self.version",
-                "typo3/cms-extra-page-cm-options": "self.version",
                 "typo3/cms-feedit": "self.version",
                 "typo3/cms-felogin": "self.version",
                 "typo3/cms-filelist": "self.version",
@@ -1631,7 +1630,6 @@
                 "typo3/cms-lowlevel": "self.version",
                 "typo3/cms-opendocs": "self.version",
                 "typo3/cms-openid": "self.version",
-                "typo3/cms-perm": "self.version",
                 "typo3/cms-recordlist": "self.version",
                 "typo3/cms-recycler": "self.version",
                 "typo3/cms-reports": "self.version",
@@ -1654,8 +1652,10 @@
                 "typo3/cms-workspaces": "self.version"
             },
             "require-dev": {
-                "mikey179/vfsstream": "1.3.*@dev",
-                "phpunit/phpunit": "~4.4.0"
+                "fortawesome/font-awesome": "4.2.*",
+                "mikey179/vfsstream": "1.4.*@dev",
+                "phpunit/phpunit": "~4.4.0",
+                "twbs/bootstrap": "3.3.*"
             },
             "suggest": {
                 "ext-gd": "GDlib/Freetype is required for building images with text (GIFBUILDER) and can also be used to scale images",
@@ -1667,22 +1667,10 @@
             "type": "typo3-cms-core",
             "extra": {
                 "branch-alias": {
-                    "dev-TYPO3_6-2": "6.2.x-dev"
+                    "dev-master": "7.x-dev"
                 },
-                "autoload-case-sensitivity": false,
                 "class-alias-maps": [
-                    "typo3/sysext/backend/Migrations/Code/ClassAliasMap.php",
-                    "typo3/sysext/core/Migrations/Code/ClassAliasMap.php",
-                    "typo3/sysext/cshmanual/Migrations/Code/ClassAliasMap.php",
-                    "typo3/sysext/extbase/Migrations/Code/ClassAliasMap.php",
-                    "typo3/sysext/extensionmanager/Migrations/Code/ClassAliasMap.php",
-                    "typo3/sysext/fluid/Migrations/Code/ClassAliasMap.php",
-                    "typo3/sysext/frontend/Migrations/Code/ClassAliasMap.php",
-                    "typo3/sysext/install/Migrations/Code/ClassAliasMap.php",
-                    "typo3/sysext/lang/Migrations/Code/ClassAliasMap.php",
-                    "typo3/sysext/recordlist/Migrations/Code/ClassAliasMap.php",
-                    "typo3/sysext/saltedpasswords/Migrations/Code/ClassAliasMap.php",
-                    "typo3/sysext/sv/Migrations/Code/ClassAliasMap.php"
+                    "typo3/sysext/core/Migrations/Code/ClassAliasMap.php"
                 ]
             },
             "autoload": {
@@ -1766,9 +1754,9 @@
                 "issues": "http://forge.typo3.org",
                 "irc": "irc://irc.freenode.net/#typo3-cms",
                 "news": "nntp://lists.typo3.org",
-                "source": "https://github.com/TYPO3/TYPO3.CMS/tree/TYPO3_6-2-10"
+                "source": "https://github.com/TYPO3/TYPO3.CMS/tree/TYPO3_7-1-0"
             },
-            "time": "2015-02-26 17:50:53"
+            "time": "2015-02-24 14:34:50"
         }
     ],
     "aliases": [],

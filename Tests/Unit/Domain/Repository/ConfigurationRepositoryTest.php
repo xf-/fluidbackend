@@ -57,7 +57,7 @@ class ConfigurationRepositoryTest extends UnitTestCase {
 		);
 		$query->setQuerySettings(
 			GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager')
-				->get('\TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings')
+				->get('TYPO3\\CMS\\Extbase\\Persistence\\Generic\Typo3QuerySettings')
 		);
 		$result = $this->getMock(
 			'TYPO3\\CMS\\Extbase\\Persistence\\Generic\\QueryResult',

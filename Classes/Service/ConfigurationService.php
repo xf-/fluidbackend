@@ -14,6 +14,7 @@ use FluidTYPO3\Flux\Form;
 use FluidTYPO3\Flux\Service\FluxService;
 use FluidTYPO3\Flux\Utility\ExtensionNamingUtility;
 use FluidTYPO3\Flux\Utility\MiscellaneousUtility;
+use FluidTYPO3\Flux\Utility\RecursiveArrayUtility;
 use FluidTYPO3\Flux\Utility\ResolveUtility;
 use FluidTYPO3\Flux\Utility\PathUtility;
 use FluidTYPO3\Flux\View\TemplatePaths;
@@ -97,7 +98,7 @@ class ConfigurationService extends FluxService implements SingletonInterface {
 			if (FALSE === strpos($position, ':')) {
 				if ('top' === $position) {
 					$temp_TBE_MODULES = array($module => '');
-					$temp_TBE_MODULES = GeneralUtility::array_merge_recursive_overrule($temp_TBE_MODULES, $GLOBALS['TBE_MODULES']);
+					$temp_TBE_MODULES = RecursiveArrayUtility::mergeRecursiveOverrule($temp_TBE_MODULES, $GLOBALS['TBE_MODULES']);
 				} else {
 					$temp_TBE_MODULES = (array) $GLOBALS['TBE_MODULES'];
 					$temp_TBE_MODULES[$module] = '';
