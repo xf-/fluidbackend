@@ -95,6 +95,17 @@ class AbstractBackendController extends AbstractFluxController {
 	}
 
 	/**
+	 * @param array $data
+	 * @return string
+	 */
+	protected function getIdFromUrlParameterOrData(array $data) {
+		$module = GeneralUtility::_GET('M');
+		$module = GeneralUtility::camelCaseToLowerCaseUnderscored((string) $module);
+		$id = (FALSE === empty($module) ? array_pop(explode('_', $module)) : $data['id']);
+		return $id;
+	}
+
+	/**
 	 * @return string
 	 */
 	protected function getCurrentConfigurationName() {
@@ -102,12 +113,7 @@ class AbstractBackendController extends AbstractFluxController {
 			return $this->request->getArgument('configurationName');
 		}
 		$data = $this->getData();
-		$module = GeneralUtility::_GET('M');
-		if (FALSE === empty($module)) {
-			$id = array_pop(explode('_', GeneralUtility::camelCaseToLowerCaseUnderscored($module)));
-		} else {
-			$id = $data['id'];
-		}
+		$module = $this->getIdFromUrlParameterOrData($data);
 		$extensionName = $this->request->getControllerExtensionName();
 		$actionName = $this->request->getControllerActionName();
 		$name = implode('-', array($extensionName, $actionName, $id));
@@ -256,18 +262,6 @@ class AbstractBackendController extends AbstractFluxController {
 	}
 
 	/**
-	 * Stub error action
-	 *
-	 * Override this in your controller to render a pretty page if
-	 * fatal errors occur when rendering any part of your template
-	 * or accepting form data.
-	 *
-	 * @return void
-	 */
-	public function errorAction() {
-	}
-
-	/**
 	 * @param array $settings
 	 * @return void
 	 */
@@ -338,11 +332,9 @@ class AbstractBackendController extends AbstractFluxController {
 	 */
 	public function trimLanguageWrappersFromPostedData($post, $level = 0) {
 		foreach ($post as $name => $value) {
-			if (($name === 'v' && $level === 0)) {
-				return $this->trimLanguageWrappersFromPostedData(array_pop($value), $level + 1);
-			} elseif ($name === 'vDEF' || $name === 'lDEF') {
+			if ($name === 'vDEF' || $name === 'lDEF') {
 				return $this->trimLanguageWrappersFromPostedData($value, $level + 1);
-			} else {
+			} elseif (TRUE === is_array($value)) {
 				$post[$name] = $this->trimLanguageWrappersFromPostedData($value, $level + 1);
 			}
 		}
