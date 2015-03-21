@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9ce9b765a5044be9e8e88ee4b23e6c92",
+    "hash": "30135c3bc739895e58d3930df4b58746",
     "packages": [
         {
             "name": "fluidtypo3/flux",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FluidTYPO3/flux.git",
-                "reference": "7c0ea3cccb0164de732f033cc4837c31c53e922e"
+                "reference": "78558a4006439282b92de29f1824d5385d5ebf67"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FluidTYPO3/flux/zipball/7c0ea3cccb0164de732f033cc4837c31c53e922e",
-                "reference": "7c0ea3cccb0164de732f033cc4837c31c53e922e",
+                "url": "https://api.github.com/repos/FluidTYPO3/flux/zipball/78558a4006439282b92de29f1824d5385d5ebf67",
+                "reference": "78558a4006439282b92de29f1824d5385d5ebf67",
                 "shasum": ""
             },
             "require-dev": {
@@ -41,7 +41,7 @@
             ],
             "description": "The flux package from FluidTYPO3",
             "homepage": "http://fluidtypo3.org",
-            "time": "2015-03-18 15:12:53"
+            "time": "2015-03-21 13:06:03"
         }
     ],
     "packages-dev": [
@@ -179,16 +179,16 @@
         },
         {
             "name": "guzzle/guzzle",
-            "version": "v3.9.2",
+            "version": "v3.9.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle3.git",
-                "reference": "54991459675c1a2924122afbb0e5609ade581155"
+                "reference": "0645b70d953bc1c067bbc8d5bc53194706b628d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle3/zipball/54991459675c1a2924122afbb0e5609ade581155",
-                "reference": "54991459675c1a2924122afbb0e5609ade581155",
+                "url": "https://api.github.com/repos/guzzle/guzzle3/zipball/0645b70d953bc1c067bbc8d5bc53194706b628d9",
+                "reference": "0645b70d953bc1c067bbc8d5bc53194706b628d9",
                 "shasum": ""
             },
             "require": {
@@ -229,6 +229,9 @@
                 "zendframework/zend-cache": "2.*,<2.3",
                 "zendframework/zend-log": "2.*,<2.3"
             },
+            "suggest": {
+                "guzzlehttp/guzzle": "Guzzle 5 has moved to a new package name. The package you have installed, Guzzle 3, is deprecated."
+            },
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -256,7 +259,7 @@
                     "homepage": "https://github.com/guzzle/guzzle/contributors"
                 }
             ],
-            "description": "Guzzle is a PHP HTTP client library and framework for building RESTful web service clients",
+            "description": "PHP HTTP client. This library is deprecated in favor of https://packagist.org/packages/guzzlehttp/guzzle",
             "homepage": "http://guzzlephp.org/",
             "keywords": [
                 "client",
@@ -267,52 +270,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2014-08-11 04:32:36"
-        },
-        {
-            "name": "helhum/class-alias-loader",
-            "version": "1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/helhum/class-alias-loader.git",
-                "reference": "14073641d8d7859d08311bfcc3a5c19f3a40a6a3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/helhum/class-alias-loader/zipball/14073641d8d7859d08311bfcc3a5c19f3a40a6a3",
-                "reference": "14073641d8d7859d08311bfcc3a5c19f3a40a6a3",
-                "shasum": ""
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Helhum\\ClassAliasLoader\\": "Classes/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Helmut Hummel",
-                    "email": "info@helhum.io"
-                }
-            ],
-            "description": "Amends the composer class loader to support class aliases to provide backwards compatibility for packages",
-            "homepage": "http://github.com/helhum/class-alias-loader",
-            "keywords": [
-                "alias",
-                "autoloader",
-                "classloader",
-                "composer"
-            ],
-            "time": "2015-02-02 18:32:18"
+            "time": "2015-03-18 18:23:50"
         },
         {
             "name": "mikey179/vfsStream",
@@ -1589,189 +1547,13 @@
         {
             "name": "typo3/cms",
             "version": "7.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/TYPO3/TYPO3.CMS.git",
-                "reference": "5fa3e3899f93a5fcc022ad2564c1f23855c81e5f"
-            },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/TYPO3/TYPO3.CMS/zipball/5fa3e3899f93a5fcc022ad2564c1f23855c81e5f",
-                "reference": "5fa3e3899f93a5fcc022ad2564c1f23855c81e5f",
-                "shasum": ""
+                "url": "https://github.com/TYPO3/TYPO3.CMS/archive/7.1.0.zip",
+                "reference": null,
+                "shasum": null
             },
-            "require": {
-                "ext-fileinfo": "*",
-                "ext-pcre": "*",
-                "ext-session": "*",
-                "ext-xml": "*",
-                "helhum/class-alias-loader": "1.0.*@dev",
-                "php": ">=5.5.0",
-                "typo3/cms-composer-installers": "1.1.*@dev"
-            },
-            "replace": {
-                "typo3/cms-about": "self.version",
-                "typo3/cms-aboutmodules": "self.version",
-                "typo3/cms-adodb": "self.version",
-                "typo3/cms-backend": "self.version",
-                "typo3/cms-belog": "self.version",
-                "typo3/cms-beuser": "self.version",
-                "typo3/cms-cms": "self.version",
-                "typo3/cms-context-help": "self.version",
-                "typo3/cms-core": "self.version",
-                "typo3/cms-cshmanual": "self.version",
-                "typo3/cms-css-styled-content": "self.version",
-                "typo3/cms-dbal": "self.version",
-                "typo3/cms-documentation": "self.version",
-                "typo3/cms-extbase": "self.version",
-                "typo3/cms-extensionmanager": "self.version",
-                "typo3/cms-feedit": "self.version",
-                "typo3/cms-felogin": "self.version",
-                "typo3/cms-filelist": "self.version",
-                "typo3/cms-filemetadata": "self.version",
-                "typo3/cms-fluid": "self.version",
-                "typo3/cms-form": "self.version",
-                "typo3/cms-frontend": "self.version",
-                "typo3/cms-func": "self.version",
-                "typo3/cms-func-wizards": "self.version",
-                "typo3/cms-impexp": "self.version",
-                "typo3/cms-indexed-search": "self.version",
-                "typo3/cms-indexed-search-mysql": "self.version",
-                "typo3/cms-info": "self.version",
-                "typo3/cms-info-pagetsconfig": "self.version",
-                "typo3/cms-install": "self.version",
-                "typo3/cms-lang": "self.version",
-                "typo3/cms-linkvalidator": "self.version",
-                "typo3/cms-lowlevel": "self.version",
-                "typo3/cms-opendocs": "self.version",
-                "typo3/cms-openid": "self.version",
-                "typo3/cms-recordlist": "self.version",
-                "typo3/cms-recycler": "self.version",
-                "typo3/cms-reports": "self.version",
-                "typo3/cms-rsaauth": "self.version",
-                "typo3/cms-rtehtmlarea": "self.version",
-                "typo3/cms-saltedpasswords": "self.version",
-                "typo3/cms-scheduler": "self.version",
-                "typo3/cms-setup": "self.version",
-                "typo3/cms-sv": "self.version",
-                "typo3/cms-sys-action": "self.version",
-                "typo3/cms-sys-note": "self.version",
-                "typo3/cms-t3editor": "self.version",
-                "typo3/cms-t3skin": "self.version",
-                "typo3/cms-taskcenter": "self.version",
-                "typo3/cms-tstemplate": "self.version",
-                "typo3/cms-version": "self.version",
-                "typo3/cms-viewpage": "self.version",
-                "typo3/cms-wizard-crpages": "self.version",
-                "typo3/cms-wizard-sortpages": "self.version",
-                "typo3/cms-workspaces": "self.version"
-            },
-            "require-dev": {
-                "fortawesome/font-awesome": "4.2.*",
-                "mikey179/vfsstream": "1.4.*@dev",
-                "phpunit/phpunit": "~4.4.0",
-                "twbs/bootstrap": "3.3.*"
-            },
-            "suggest": {
-                "ext-gd": "GDlib/Freetype is required for building images with text (GIFBUILDER) and can also be used to scale images",
-                "ext-openssl": "",
-                "ext-soap": "",
-                "ext-zip": "",
-                "ext-zlib": "TYPO3 uses zlib for amongst others output compression and un/packing t3x extension files"
-            },
-            "type": "typo3-cms-core",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "7.x-dev"
-                },
-                "class-alias-maps": [
-                    "typo3/sysext/core/Migrations/Code/ClassAliasMap.php"
-                ]
-            },
-            "autoload": {
-                "psr-0": {
-                    "TYPO3\\Flow\\": "typo3/sysext/core/Resources/PHP/TYPO3.Flow/Classes/"
-                },
-                "psr-4": {
-                    "Psr\\Log\\": "typo3/contrib/Psr/Log/",
-                    "TYPO3\\CMS\\Backend\\": "typo3/sysext/backend/Classes/",
-                    "TYPO3\\CMS\\Core\\": "typo3/sysext/core/Classes/",
-                    "TYPO3\\CMS\\Cshmanual\\": "typo3/sysext/cshmanual/Classes/",
-                    "TYPO3\\CMS\\Extbase\\": "typo3/sysext/extbase/Classes/",
-                    "TYPO3\\CMS\\Extensionmanager\\": "typo3/sysext/extensionmanager/Classes/",
-                    "TYPO3\\CMS\\Fluid\\": "typo3/sysext/fluid/Classes/",
-                    "TYPO3\\CMS\\Frontend\\": "typo3/sysext/frontend/Classes/",
-                    "TYPO3\\CMS\\Install\\": "typo3/sysext/install/Classes/",
-                    "TYPO3\\CMS\\Lang\\": "typo3/sysext/lang/Classes/",
-                    "TYPO3\\CMS\\Recordlist\\": "typo3/sysext/recordlist/Classes/",
-                    "TYPO3\\CMS\\Saltedpasswords\\": "typo3/sysext/saltedpasswords/Classes/",
-                    "TYPO3\\CMS\\Sv\\": "typo3/sysext/sv/Classes/"
-                }
-            },
-            "autoload-dev": {
-                "psr-4": {
-                    "TYPO3\\CMS\\Backend\\Tests\\": "typo3/sysext/backend/Tests/",
-                    "TYPO3\\CMS\\Belog\\Tests\\": "typo3/sysext/belog/Tests/",
-                    "TYPO3\\CMS\\Beuser\\Tests\\": "typo3/sysext/beuser/Tests/",
-                    "TYPO3\\CMS\\Core\\Tests\\": "typo3/sysext/core/Tests/",
-                    "TYPO3\\CMS\\Dbal\\Tests\\": "typo3/sysext/dbal/Tests/",
-                    "TYPO3\\CMS\\Documentation\\Tests\\": "typo3/sysext/documentation/Tests/",
-                    "TYPO3\\CMS\\Extbase\\Tests\\": "typo3/sysext/extbase/Tests/",
-                    "TYPO3\\CMS\\Extensionmanager\\Tests\\": "typo3/sysext/extensionmanager/Tests/",
-                    "TYPO3\\CMS\\Felogin\\Tests\\": "typo3/sysext/felogin/Tests/",
-                    "TYPO3\\CMS\\Fluid\\Tests\\": "typo3/sysext/fluid/Tests/",
-                    "TYPO3\\CMS\\Form\\Tests\\": "typo3/sysext/form/Tests/",
-                    "TYPO3\\CMS\\Frontend\\Tests\\": "typo3/sysext/frontend/Tests/",
-                    "TYPO3\\CMS\\Impexp\\Tests\\": "typo3/sysext/impexp/Tests/",
-                    "TYPO3\\CMS\\IndexedSearch\\Tests\\": "typo3/sysext/indexed_search/Tests/",
-                    "TYPO3\\CMS\\Install\\Tests\\": "typo3/sysext/install/Tests/",
-                    "TYPO3\\CMS\\Lang\\Tests\\": "typo3/sysext/lang/Tests/",
-                    "TYPO3\\CMS\\Lowlevel\\Tests\\": "typo3/sysext/lowlevel/Tests/",
-                    "TYPO3\\CMS\\Recordlist\\Tests\\": "typo3/sysext/recordlist/Tests/",
-                    "TYPO3\\CMS\\Reports\\Tests\\": "typo3/sysext/reports/Tests/",
-                    "TYPO3\\CMS\\Rsaauth\\Tests\\": "typo3/sysext/rsaauth/Tests/",
-                    "TYPO3\\CMS\\Saltedpasswords\\Tests\\": "typo3/sysext/saltedpasswords/Tests/",
-                    "TYPO3\\CMS\\Scheduler\\Tests\\": "typo3/sysext/scheduler/Tests/",
-                    "TYPO3\\CMS\\Sv\\Tests\\": "typo3/sysext/sv/Tests/",
-                    "TYPO3\\CMS\\Workspaces\\Tests\\": "typo3/sysext/workspaces/Tests/"
-                }
-            },
-            "scripts": {
-                "post-autoload-dump": [
-                    "Helhum\\ClassAliasLoader\\Composer\\ClassAliasGenerator::generateAliasMap"
-                ]
-            },
-            "license": [
-                "GPL-2.0+"
-            ],
-            "authors": [
-                {
-                    "name": "TYPO3 CMS Core Team",
-                    "role": "Developer",
-                    "homepage": "http://forge.typo3.org/projects/typo3cms-core"
-                },
-                {
-                    "name": "The TYPO3 Community",
-                    "role": "Contributor",
-                    "homepage": "https://typo3.org/community/"
-                }
-            ],
-            "description": "TYPO3 CMS is a free open source Content Management Framework initially created by Kasper Skaarhoj and licensed under GNU/GPL.",
-            "homepage": "http://typo3.org/",
-            "keywords": [
-                "cms",
-                "content management system",
-                "extbase",
-                "typo3"
-            ],
-            "support": {
-                "general": "http://typo3.org/support/",
-                "issues": "http://forge.typo3.org",
-                "irc": "irc://irc.freenode.net/#typo3-cms",
-                "news": "nntp://lists.typo3.org",
-                "source": "https://github.com/TYPO3/TYPO3.CMS/tree/TYPO3_7-1-0"
-            },
-            "time": "2015-02-24 14:34:50"
+            "type": "library"
         }
     ],
     "aliases": [],
