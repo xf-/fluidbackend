@@ -331,13 +331,15 @@ class AbstractBackendController extends AbstractFluxController {
 	 * @return mixed
 	 */
 	public function trimLanguageWrappersFromPostedData($post, $level = 0) {
-		foreach ($post as $name => $value) {
-			if ($name === 'vDEF' || $name === 'lDEF') {
-				return $this->trimLanguageWrappersFromPostedData($value, $level + 1);
-			} elseif (TRUE === is_array($value)) {
-				$post[$name] = $this->trimLanguageWrappersFromPostedData($value, $level + 1);
-			}
-		}
+        if (TRUE === is_array($post)) {
+            foreach ($post as $name => $value) {
+                if ($name === 'vDEF' || $name === 'lDEF') {
+                    return $this->trimLanguageWrappersFromPostedData($value, $level + 1);
+                } elseif (TRUE === is_array($value)) {
+                    $post[$name] = $this->trimLanguageWrappersFromPostedData($value, $level + 1);
+                }
+            }
+        }
 		return $post;
 	}
 
