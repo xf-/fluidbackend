@@ -157,7 +157,7 @@ class ConfigurationService extends FluxService implements SingletonInterface {
 			$context->setTemplatePaths($paths);
 			$files = $paths->resolveAvailableTemplateFiles('Backend');
 			foreach ($files as $fileName) {
-				$templatePathAndFilename = $directoryPath . $fileName;
+				$templatePathAndFilename = $fileName;
 				$context->setTemplatePathAndFilename($templatePathAndFilename);
 				$form = $this->getFormFromTemplateFile($context);
 				$this->registerModuleBasedOnFluxForm($extensionKey, $form);
