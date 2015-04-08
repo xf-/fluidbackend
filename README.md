@@ -104,7 +104,7 @@ There are two ways to reach the stored data record manually:
 ```xml
 <!-- in Fluid -->
 
-{flux:flexform.data(table: 'tx_fluidbackend_domain_model_configuration',
+{flux:form.data(table: 'tx_fluidbackend_domain_model_configuration',
 	field: 'configuration', uid: uidOfSavedRecord) -> v:var.set(name: 'myData')}
 ```
 

@@ -22,6 +22,7 @@ use FluidTYPO3\Flux\View\ViewContext;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 
 /**
@@ -88,7 +89,7 @@ class ConfigurationService extends FluxService implements SingletonInterface {
 		$moduleConfiguration = array(
 			'access' => 'user,group',
 			'icon'   => $icon,
-			'labels' => 'LLL:EXT:' . $extensionKey . '/Resources/Private/Language/locallang_module_' . $formId . '.xml'
+			'labels' => 'LLL:EXT:' . $extensionKey . '/Resources/Private/Language/locallang_module_' . $formId . '.xlf'
 		);
 		if (FALSE === empty($navigationComponent)) {
 			$moduleConfiguration['navigationComponentId'] = $navigationComponent;
@@ -121,7 +122,7 @@ class ConfigurationService extends FluxService implements SingletonInterface {
 			}
 			$GLOBALS['TBE_MODULES'] = (array) $temp_TBE_MODULES;
 			// register pseudo-module acting as group header
-			$moduleConfiguration['labels'] = 'LLL:EXT:' . $extensionKey . '/Resources/Private/Language/locallang_modulegroup.xml';
+			$moduleConfiguration['labels'] = 'LLL:EXT:' . $extensionKey . '/Resources/Private/Language/locallang_modulegroup.xlf';
             ExtensionUtility::registerModule(
 				$qualifiedExtensionName,
 				$module,
@@ -132,7 +133,7 @@ class ConfigurationService extends FluxService implements SingletonInterface {
 			);
 		}
 		// register individual module in group
-		$moduleConfiguration['labels'] = 'LLL:EXT:' . $extensionKey . '/Resources/Private/Language/locallang_module_' . $formId . '.xml';
+		$moduleConfiguration['labels'] = 'LLL:EXT:' . $extensionKey . '/Resources/Private/Language/locallang_module_' . $formId . '.xlf';
         ExtensionUtility::registerModule(
 			$qualifiedExtensionName,
 			$module,
@@ -157,7 +158,7 @@ class ConfigurationService extends FluxService implements SingletonInterface {
 			$context->setTemplatePaths($paths);
 			$files = $paths->resolveAvailableTemplateFiles('Backend');
 			foreach ($files as $fileName) {
-				$templatePathAndFilename = $directoryPath . $fileName;
+				$templatePathAndFilename = $fileName;
 				$context->setTemplatePathAndFilename($templatePathAndFilename);
 				$form = $this->getFormFromTemplateFile($context);
 				$this->registerModuleBasedOnFluxForm($extensionKey, $form);

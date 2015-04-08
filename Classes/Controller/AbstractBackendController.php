@@ -113,10 +113,10 @@ class AbstractBackendController extends AbstractFluxController {
 			return $this->request->getArgument('configurationName');
 		}
 		$data = $this->getData();
-		$module = $this->getIdFromUrlParameterOrData($data);
+		$moduleId = $this->getIdFromUrlParameterOrData($data);
 		$extensionName = $this->request->getControllerExtensionName();
 		$actionName = $this->request->getControllerActionName();
-		$name = implode('-', array($extensionName, $actionName, $id));
+		$name = implode('-', array($extensionName, $actionName, $moduleId));
 		return $name;
 	}
 
@@ -331,11 +331,13 @@ class AbstractBackendController extends AbstractFluxController {
 	 * @return mixed
 	 */
 	public function trimLanguageWrappersFromPostedData($post, $level = 0) {
-		foreach ($post as $name => $value) {
-			if ($name === 'vDEF' || $name === 'lDEF') {
-				return $this->trimLanguageWrappersFromPostedData($value, $level + 1);
-			} elseif (TRUE === is_array($value)) {
-				$post[$name] = $this->trimLanguageWrappersFromPostedData($value, $level + 1);
+		if (TRUE === is_array($post)) {
+			foreach ($post as $name => $value) {
+				if ($name === 'vDEF' || $name === 'lDEF') {
+					return $this->trimLanguageWrappersFromPostedData($value, $level + 1);
+				} elseif (TRUE === is_array($value)) {
+					$post[$name] = $this->trimLanguageWrappersFromPostedData($value, $level + 1);
+				}
 			}
 		}
 		return $post;
