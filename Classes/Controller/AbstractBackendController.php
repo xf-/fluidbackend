@@ -133,7 +133,7 @@ class AbstractBackendController extends AbstractFluxController {
 				'tstamp' => time(),
 				'crdate' => time(),
 				'name' => $name,
-				'lagel' => 'AUTO: ' . $name,
+				'label' => 'AUTO: ' . $name,
 				'pid' => $pageUid,
 			);
 			$GLOBALS['TYPO3_DB']->exec_INSERTquery($this->fluxTableName, $record);
