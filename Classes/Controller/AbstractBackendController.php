@@ -71,7 +71,6 @@ class AbstractBackendController extends AbstractFluxController {
 		$pageUid = $this->getCurrentPageUid();
 		$this->configuration = $this->configurationRepository->findOrCreateOneByNameInPid($name, $pageUid);
 		$this->formHandler = $this->objectManager->get('TYPO3\CMS\Backend\Form\FormEngine');
-		$this->formHandler->initDefaultBEmode();
 		$this->formHandler->enableClickMenu = TRUE;
 		$this->formHandler->enableTabMenu = TRUE;
 		$this->view->assign('formHandler', $this->formHandler);
