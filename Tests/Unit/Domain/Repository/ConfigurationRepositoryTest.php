@@ -2,9 +2,10 @@
 namespace FluidTYPO3\Fluidbackend\Tests\Unit\Domain\Repository;
 
 use FluidTYPO3\Fluidbackend\Domain\Model\Configuration;
+use FluidTYPO3\Fluidbackend\Domain\Repository\ConfigurationRepository;
 use TYPO3\CMS\Core\Tests\UnitTestCase;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
+use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 
 /**
  * Class ConfigurationRepositoryTest
@@ -16,7 +17,7 @@ class ConfigurationRepositoryTest extends UnitTestCase {
 	 */
 	public function testFindOrCreateOneByNameInPidReturnsFound() {
 		$instance = $this->getInstanceMock(FALSE);
-		$result = $instance->findOrCreateOneByNameInPid('foobar', 1);
+		$instance->findOrCreateOneByNameInPid('foobar', 1);
 	}
 
 	/**
@@ -24,7 +25,7 @@ class ConfigurationRepositoryTest extends UnitTestCase {
 	 */
 	public function testFindOrCreateOneByNameInPidReturnsCreated() {
 		$instance = $this->getInstanceMock(TRUE);
-		$result = $instance->findOrCreateOneByNameInPid('foobar', 1);
+		$instance->findOrCreateOneByNameInPid('foobar', 1);
 	}
 
 	/**
@@ -50,6 +51,7 @@ class ConfigurationRepositoryTest extends UnitTestCase {
 		);
 		$this->inject($instance, 'persistenceManager', $persistenceManager);
 		$this->inject($instance, 'objectManager', $objectManager);
+		/** @var Query|\PHPUnit_Framework_MockObject_MockObject $query */
 		$query = $this->getMock(
 			'TYPO3\\CMS\\Extbase\\Persistence\\Generic\\Query',
 			array('execute', 'matching', 'equals', 'logicalAnd'),

@@ -11,10 +11,7 @@ namespace FluidTYPO3\Fluidbackend\Provider\Configuration;
 use FluidTYPO3\Flux\Provider\ProviderInterface;
 use FluidTYPO3\Flux\Provider\AbstractProvider;
 use FluidTYPO3\Flux\Utility\ExtensionNamingUtility;
-use FluidTYPO3\Flux\Utility\PathUtility;
 use FluidTYPO3\Flux\View\TemplatePaths;
-use FluidTYPO3\Flux\View\ViewContext;
-use TYPO3\CMS\Backend\Form\FormEngine;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**

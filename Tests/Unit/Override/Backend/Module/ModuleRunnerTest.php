@@ -1,7 +1,7 @@
 <?php
 namespace FluidTYPO3\Fluidbackend\Test\Unit\Override\Backend\Module;
 
-use FluidTYPO3\Fluidbackend\Override\Backend\Module\ModuleLoader;
+use FluidTYPO3\Fluidbackend\Override\Backend\Module\ModuleRunner;
 use TYPO3\CMS\Core\Tests\UnitTestCase;
 
 /**
@@ -13,6 +13,7 @@ class ModuleRunnerTest extends UnitTestCase {
 	 * @test
 	 */
 	public function testLoad() {
+		/** @var ModuleRunner|\PHPUnit_Framework_MockObject_MockObject $loader */
 		$loader = $this->getMock('FluidTYPO3\Fluidbackend\Override\Backend\Module\ModuleRunner', array('performModuleCall'));
 		$loader->expects($this->once())->method('performModuleCall')->with('test');
 		$loader->callModule('test');

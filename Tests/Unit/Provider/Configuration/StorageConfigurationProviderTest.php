@@ -25,6 +25,7 @@ class StorageConfigurationProviderTest extends UnitTestCase {
 	 * @dataProvider getControllerActionFromRecordTestValues
 	 */
 	public function testGetControllerActionFromRecord(array $record, $getAction, $expected) {
+		/** @var StorageConfigurationProvider|\PHPUnit_Framework_MockObject_MockObject $mock */
 		$mock = $this->getMock(
 			'FluidTYPO3\\Fluidbackend\\Provider\\Configuration\\StorageConfigurationProvider',
 			array('getExtensionKeyAndActionFromUrl')
@@ -51,6 +52,7 @@ class StorageConfigurationProviderTest extends UnitTestCase {
 	 * @param string $expected
 	 */
 	public function testGetTemplatePathAndFilename(array $record, $expected) {
+		/** @var FluxService|\PHPUnit_Framework_MockObject_MockObject $service */
 		$service = $this->getMock('FluidTYPO3\\Flux\\Service\\FluxService', array('getViewConfigurationForExtensionName'));
 		$service->expects($this->once())->method('getViewConfigurationForExtensionName')->with($expected);
 		$instance = new StorageConfigurationProvider();

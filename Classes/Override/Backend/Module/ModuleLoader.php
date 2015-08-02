@@ -38,9 +38,9 @@ class ModuleLoader extends \TYPO3\CMS\Backend\Module\ModuleLoader {
 	/**
 	 * @codeCoverageIgnore
 	 * @param array $modules
-	 * @param mixed $user
+	 * @param mixed $BE_USER
 	 */
-	protected function performModuleLoading(array $modules, $user) {
+	protected function performModuleLoading(array $modules, $BE_USER) {
 		parent::load($modules, NULL === $BE_USER ? $GLOBALS['BE_USER'] : $BE_USER);
 	}
 

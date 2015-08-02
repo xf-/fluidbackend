@@ -15,14 +15,9 @@ use FluidTYPO3\Flux\Service\FluxService;
 use FluidTYPO3\Flux\Utility\ExtensionNamingUtility;
 use FluidTYPO3\Flux\Utility\MiscellaneousUtility;
 use FluidTYPO3\Flux\Utility\RecursiveArrayUtility;
-use FluidTYPO3\Flux\Utility\ResolveUtility;
-use FluidTYPO3\Flux\Utility\PathUtility;
 use FluidTYPO3\Flux\View\TemplatePaths;
 use FluidTYPO3\Flux\View\ViewContext;
 use TYPO3\CMS\Core\SingletonInterface;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 
 /**
@@ -45,10 +40,9 @@ class ConfigurationService extends FluxService implements SingletonInterface {
 	}
 
 	/**
-	 * @param string $extensionName
 	 * @return array
 	 */
-	public function getBackendModuleTemplatePaths($extensionName = NULL) {
+	public function getBackendModuleTemplatePaths() {
 		$extensionKeys = $this->getRegisteredProviderExtensionKeys();
 		return array_map(array($this, 'getViewConfigurationForExtensionName'), array_combine($extensionKeys, $extensionKeys));
 	}

@@ -1,7 +1,6 @@
 <?php
 namespace FluidTYPO3\Fluidbackend\Override\Backend\Module;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Backend\Template\DocumentTemplate;
 
 /**
  * Class ModuleRunner
